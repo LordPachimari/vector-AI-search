@@ -22,6 +22,7 @@ export const users = pgTable(
 		replicachePK: varchar("replicache_pk").notNull(),
 		username: varchar("username").notNull(),
 		fullName: varchar("fullName"),
+		avatarURL:varchar("avatar_url"),
 		about: text("about"),
 		skills: varchar("skills"),
 		hobby: varchar("hobby"),
