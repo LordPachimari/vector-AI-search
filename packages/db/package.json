@@ -19,6 +19,7 @@
     "lint": "biome lint src",
     "studio": "pnpm with-env drizzle-kit studio --config src/config.ts",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "beautify": "biome format ./src --write",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
