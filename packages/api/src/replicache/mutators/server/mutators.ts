@@ -1,5 +1,5 @@
-import type { SpaceID } from "@soulmate/validators";
 import { updateUser } from "./user";
+import { createChat } from "./chat";
 
 const GlobalMutators = {
 	updateUser,
@@ -9,10 +9,10 @@ export const GlobalMutatorsMap = new Map(Object.entries(GlobalMutators));
 export type GlobalMutatorsType = typeof GlobalMutators;
 export type GlobalMutatorsMapType = typeof GlobalMutatorsMap;
 
-type MutatorKeys = keyof GlobalMutatorsType;
-//affected spaces and its subspaces
-export type AffectedSpaces = Record<MutatorKeys, Partial<SpaceID>>;
-
-export const affectedSpaces: AffectedSpaces = {
-	updateUser: "global",
+const ChatMutators = {
+	createChat,
 };
+
+export const ChatMutatorsMap = new Map(Object.entries(ChatMutators));
+export type ChatMutatorsType = typeof ChatMutators;
+export type ChatMutatorsMapType = typeof ChatMutatorsMap;

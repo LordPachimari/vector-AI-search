@@ -5,7 +5,7 @@ import { getEntityFromID } from "./util/get-id";
 
 async function createUser(tx: WriteTransaction, input: CreateUser) {
 	const { user } = input;
-	await tx.set(user.id, user);
+	await tx.set(user.replicachePK, user);
 }
 
 async function updateUser(tx: WriteTransaction, input: UpdateUser) {
@@ -15,7 +15,7 @@ async function updateUser(tx: WriteTransaction, input: UpdateUser) {
 		console.info("User  not found");
 		throw new Error("User not found");
 	}
-	await tx.set(id, { ...user, ...updates });
+	await tx.set(user.replicachePK, { ...user, ...updates });
 }
 
 export { updateUser, createUser };

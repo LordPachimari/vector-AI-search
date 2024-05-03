@@ -1,1 +1,1 @@
-export const something = "user";
+export * from "./replicache";

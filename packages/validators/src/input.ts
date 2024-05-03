@@ -3,10 +3,13 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const UserInsertSchema = createInsertSchema(schema.users);
+export const ChatInsertSchema = createInsertSchema(schema.chats);
 export const CreateUserSchema = z.object({
 	user: UserInsertSchema,
 });
 export type CreateUser = z.infer<typeof CreateUserSchema>;
+
+export type CreateChat = z.infer<typeof CreateChatSchema>;
 export const UserSchema = createSelectSchema(schema.users);
 export type User = z.infer<typeof UserSchema>;
 export const UpdateUserSchema = z.object({
@@ -21,3 +24,6 @@ export const UpdateUserSchema = z.object({
 });
 
 export type UpdateUser = z.infer<typeof UpdateUserSchema>;
+export const CreateChatSchema = z.object({
+	chat: ChatInsertSchema,
+});
