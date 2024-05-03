@@ -20,9 +20,7 @@ export function useUploadFile(
 ) {
 	const [uploadedFiles, setUploadedFiles] =
 		React.useState<UploadedFile[]>(defaultUploadedFiles);
-	const [progress, setProgress] = React.useState<number>(
-		0,
-	);
+	const [progress, setProgress] = React.useState<number>(0);
 	const [isUploading, setIsUploading] = React.useState(false);
 
 	async function uploadThings(files: File[]) {
@@ -31,7 +29,7 @@ export function useUploadFile(
 			const res = await uploadFiles(endpoint, {
 				...props,
 				files,
-				onUploadProgress: ({  progress }) => {
+				onUploadProgress: ({ progress }) => {
 					setProgress(progress);
 				},
 			});

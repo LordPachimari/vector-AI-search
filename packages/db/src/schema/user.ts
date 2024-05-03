@@ -15,10 +15,10 @@ const uni = [
 	"Deakin",
 	"Victoria",
 	"La Trobe",
-    "Tate University",
-    "Harvard",
-    "MIT",
-    "Stanford"
+	"Tate University",
+	"Harvard",
+	"MIT",
+	"Stanford",
 ] as const;
 export const users = pgTable(
 	"users",
@@ -27,11 +27,11 @@ export const users = pgTable(
 		replicachePK: varchar("replicache_pk").notNull(),
 		username: varchar("username").notNull(),
 		fullName: varchar("fullName"),
-		avatarURL:varchar("avatar_url"),
+		avatarURL: varchar("avatar_url"),
 		about: text("about"),
 		skills: json("skills").$type<string[]>(),
 		hobbies: json("hobbies").$type<string[]>(),
-		uni: text("uni", { enum: uni }).notNull().default("monash"),
+		uni: text("uni", { enum: uni }).notNull().default("Monash"),
 		createdAt: varchar("created_at").notNull(),
 		updatedAt: varchar("updated_at").$onUpdate(() => new Date().toISOString()),
 		version: integer("version").notNull(),

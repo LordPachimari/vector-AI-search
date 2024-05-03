@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { FileUploader } from "~/components/file-uploader";
 import { useUploadFile } from "~/hooks/use-upload-file";
 
@@ -16,7 +16,6 @@ export const ImageSection = () => {
 				progress={progress}
 				onUpload={uploadFiles}
 				disabled={isUploading}
-				
 			/>
 		</div>
 	);

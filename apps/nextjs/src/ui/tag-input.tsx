@@ -2,7 +2,6 @@ import type React from "react";
 import { useRef, useState } from "react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
-
 const inputBaseStyles = cn(
 	"caret-ui-fg-base bg-slate-1 hover:bg-slate-2 border-ui-border-base shadow-buttons-neutral placeholder-ui-fg-muted text-ui-fg-base transition-fg relative w-full appearance-none rounded-lg border outline-none",
 	"focus:border-blue-6 focus:shadow-borders-active focus:shadow-blue-2 focus:shadow-input-shadow",

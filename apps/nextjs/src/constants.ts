@@ -1,5 +1,4 @@
 const uni = [
-
 	"Monash",
 	"University of melbourne",
 	"Swinburne",
@@ -7,9 +6,9 @@ const uni = [
 	"Deakin",
 	"Victoria",
 	"La Trobe",
-    "Tate University",
-    "Harvard",
-    "MIT",
-    "Stanford"
+	"Tate University",
+	"Harvard",
+	"MIT",
+	"Stanford",
 ] as const;
-export {uni}
+export { uni };

@@ -40,12 +40,11 @@ export default function Page() {
 						</Dialog>
 					</div>
 				</section>
-				<Inputs/>
+				<Inputs />
 				{/* <section></section> */}
-				<SocialMedia/>
+				<SocialMedia />
 				<section className="w-full flex justify-center">
-
-				<Button>Finish it!</Button>
+					<Button>Finish it!</Button>
 				</section>
 			</div>
 		</main>

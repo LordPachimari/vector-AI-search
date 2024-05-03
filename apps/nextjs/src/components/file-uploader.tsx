@@ -121,8 +121,6 @@ export function FileUploader(props: FileUploaderProps) {
 				return;
 			}
 
-			
-
 			const updatedFiles = acceptedFiles;
 
 			setFiles(updatedFiles);
