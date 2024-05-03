@@ -1,5 +1,5 @@
 {
-	"extends": "@pachi/tsconfig/base.json",
+	"extends": "@soulmate/tsconfig/base.json",
 	"exclude": ["node_modules"],
 	"compilerOptions": {
 		"paths": {
