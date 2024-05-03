@@ -8,13 +8,16 @@ import {
 	DialogTrigger,
 } from "~/ui/dialog";
 import { ImageSection } from "./components/image";
+import { Inputs } from "./components/inputs";
+import { SocialMedia } from "./components/social-media";
+import { Button } from "~/ui/button";
 
 export default function Page() {
 	return (
 		<main className="w-full flex items-center justify-center">
 			<div className="max-w-7xl pt-20">
 				<section>
-					<h3 className="text-6xl font-extrabold tracking-tight py-4">
+					<h3 className="text-6xl font-extrabold tracking-tight py-4 text-center">
 						Build your <span className="text-blue-9">profile</span>
 					</h3>
 					<div className="w-full flex justify-center">
@@ -32,13 +35,18 @@ export default function Page() {
 								<DialogHeader>
 									<DialogTitle>Upload profile image</DialogTitle>
 								</DialogHeader>
-								<ImageSection/>
+								<ImageSection />
 							</DialogContent>
 						</Dialog>
 					</div>
 				</section>
+				<Inputs/>
 				{/* <section></section> */}
-				<section>daw</section>
+				<SocialMedia/>
+				<section className="w-full flex justify-center">
+
+				<Button>Finish it!</Button>
+				</section>
 			</div>
 		</main>
 	);
