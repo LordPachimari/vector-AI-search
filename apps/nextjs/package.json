@@ -8,8 +8,8 @@
 		"clean": "git clean -xdf .next .turbo node_modules",
 		"dev": "pnpm with-env next dev",
 		"start": "pnpm with-env next start",
-		"typecheck": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --",
+		"typecheck": "tsc --noEmit",
 		"format": "biome format ./src",
 		"lint": "biome lint src",
 		"beautify": "biome format ./src --write"

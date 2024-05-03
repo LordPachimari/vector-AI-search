@@ -1,0 +1,21 @@
+{
+	"name": "@acme/server",
+	"version": "1.0.50",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "bun run --watch src/index.ts",
+		"format": "biome format ./src",
+		"lint": "biome lint src",
+		"beautify": "biome format ./src --write"
+	},
+	"dependencies": {
+		"@elysiajs/cors": "^1.0.2",
+		"elysia": "latest",
+		"ulid": "^2.3.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.7.2",
+		"bun-types": "latest"
+	},
+	"module": "src/index.js"
+}
