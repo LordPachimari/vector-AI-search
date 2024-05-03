@@ -2,31 +2,29 @@ import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
-// import { Toaster } from "@acme/ui/toast";
-
 import "~/app/globals.css";
 
 import { env } from "~/env";
 import { cn } from "~/utils/cn";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "~/ui/toaster";
+import { ThemeToggle } from "~/providers/themes";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
 		env.VERCEL_ENV === "production"
-			? "https://turbo.t3.gg"
+			? "https://uni-soulmate.vercel.app"
 			: "http://localhost:3000",
 	),
-	title: "Create T3 Turbo",
-	description: "Simple monorepo with shared backend for web & mobile apps",
+	title: "Uni soulmate",
+	description:
+		"Find someone who shares your interests, hobbies, and values. Someone who can understand you. Someone who can be your best study mate",
 	openGraph: {
-		title: "Create T3 Turbo",
-		description: "Simple monorepo with shared backend for web & mobile apps",
+		title: "Uni soulmate",
+		description:
+			"Find someone who shares your interests, hobbies, and values. Someone who can understand you. Someone who can be your best study mate",
 		url: "https://create-t3-turbo.vercel.app",
-		siteName: "Create T3 Turbo",
-	},
-	twitter: {
-		card: "summary_large_image",
-		site: "@jullerino",
-		creator: "@jullerino",
+		siteName: "Uni soulmate",
 	},
 };
 
@@ -42,15 +40,18 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 		<html lang="en" suppressHydrationWarning>
 			<body
 				className={cn(
-					"min-h-screen bg-background font-sans text-foreground antialiased",
+					"min-h-screen bg-blue-2 font-sans text-foreground antialiased",
 					GeistSans.variable,
 					GeistMono.variable,
 				)}
 			>
-				{/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem> */}
-				{props.children}
-				{/* <Toaster /> */}
-				{/* </ThemeProvider> */}
+				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+					{props.children}
+					<div className="absolute bottom-4 right-4">
+						<ThemeToggle />
+					</div>
+					<Toaster />
+				</ThemeProvider>
 			</body>
 		</html>
 	);
