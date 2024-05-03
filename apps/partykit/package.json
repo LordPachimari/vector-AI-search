@@ -1,0 +1,22 @@
+{
+	"name": "@soulmate/partykit",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"beautify": "biome format ./src --write",
+		"dev": "partykit dev",
+		"deploy": "partykit deploy",
+		"format": "biome format ./src",
+		"lint": "biome lint src"
+	},
+	"dependencies": {
+		"@soulmate/db": "workspace:^0.1.0",
+		"partysocket": "^1.0.1",
+		"zod": "^3.23.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.7.2",
+		"partykit": "^0.0.104",
+		"typescript": "^5.4.5"
+	}
+}
