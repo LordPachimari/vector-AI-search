@@ -7,6 +7,7 @@ export const messages = pgTable(
 	{
 		id: varchar("id").notNull().primaryKey(),
 		text: varchar("text").notNull().primaryKey(),
+		replicachePK: varchar("replicache_pk").notNull(),
 		createdAt: varchar("created_at").notNull(),
 		updatedAt: varchar("updated_at").$onUpdate(() => new Date().toISOString()),
 		chatID: varchar("chat_id")
@@ -19,7 +20,7 @@ export const messages = pgTable(
 	}),
 );
 
-export const chatRelations = relations(messages, ({ many, one }) => ({
+export const messageRelations = relations(messages, ({ many, one }) => ({
 	chat: one(chats, {
 		fields: [messages.chatID],
 		references: [chats.id],

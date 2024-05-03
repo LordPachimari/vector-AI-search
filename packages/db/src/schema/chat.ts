@@ -1,11 +1,13 @@
 import { integer, pgTable, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 import { users } from "./user";
 import { relations } from "drizzle-orm";
+import { messages } from "./message";
 
 export const chats = pgTable(
-	"users",
+	"chats",
 	{
 		id: varchar("id").notNull().primaryKey(),
+		replicachePK: varchar("replicache_pk").notNull(),
 		chatter1ID: varchar("chatter1_id")
 			.notNull()
 			.references(() => users.id),
@@ -31,4 +33,5 @@ export const chatRelations = relations(chats, ({ many, one }) => ({
 		fields: [chats.chatter2ID],
 		references: [users.id],
 	}),
+	messages: many(messages),
 }));

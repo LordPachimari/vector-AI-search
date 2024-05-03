@@ -1,0 +1,24 @@
+{
+	"name": "@soulmate/utils",
+	"version": "0.1.0",
+	"main": "src/index.ts",
+	"types": "src/index.ts",
+	"license": "MIT",
+	"scripts": {
+		"beautify": "biome format ./src --write",
+		"clean": "rm -rf .turbo node_modules",
+		"lint": "biome lint ./src",
+		"format": "biome format ./src",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@soulmate/validators": "workspace:^0.1.0",
+		"effect": "^3.0.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.7.2",
+		"@soulmate/tsconfig": "workspace:^0.1.0",
+		"dotenv-cli": "^7.4.1",
+		"typescript": "^5.4.5"
+	}
+}

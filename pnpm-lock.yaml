@@ -20,15 +20,6 @@ importers:
 
   apps/nextjs:
     dependencies:
-      '@acme/api':
-        specifier: workspace:*
-        version: link:../../packages/api
-      '@acme/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@acme/validators':
-        specifier: workspace:*
-        version: link:../../packages/validators
       '@radix-ui/react-avatar':
         specifier: ^1.0.4
         version: 1.0.4(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
@@ -53,6 +44,15 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.0.2
         version: 1.0.2(@types/react@18.3.1)(react@18.3.1)
+      '@soulmate/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@soulmate/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@soulmate/validators':
+        specifier: workspace:*
+        version: link:../../packages/validators
       '@t3-oss/env-nextjs':
         specifier: ^0.10.0
         version: 0.10.1(typescript@5.4.5)(zod@3.23.6)
@@ -99,15 +99,15 @@ importers:
         specifier: ^3.23.0
         version: 3.23.6
     devDependencies:
-      '@acme/tailwind-config':
+      '@biomejs/biome':
+        specifier: ^1.7.2
+        version: 1.7.2
+      '@soulmate/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind
-      '@acme/tsconfig':
+      '@soulmate/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      '@biomejs/biome':
-        specifier: 1.7.2
-        version: 1.7.2
       '@types/node':
         specifier: ^20.12.5
         version: 20.12.8
@@ -138,12 +138,9 @@ importers:
       elysia:
         specifier: latest
         version: 1.0.16(@sinclair/typebox@0.32.27)(typescript@5.4.5)
-      ulid:
-        specifier: ^2.3.0
-        version: 2.3.0
     devDependencies:
       '@biomejs/biome':
-        specifier: 1.7.2
+        specifier: ^1.7.2
         version: 1.7.2
       bun-types:
         specifier: latest
@@ -151,22 +148,34 @@ importers:
 
   packages/api:
     dependencies:
-      '@acme/db':
+      '@soulmate/db':
         specifier: workspace:*
         version: link:../db
-      '@acme/validators':
+      '@soulmate/utils':
+        specifier: workspace:*
+        version: link:../utils
+      '@soulmate/validators':
         specifier: workspace:*
         version: link:../validators
+      remeda:
+        specifier: ^1.61.0
+        version: 1.61.0
+      replicache:
+        specifier: ^14.2.2
+        version: 14.2.2
+      ulidx:
+        specifier: ^2.3.0
+        version: 2.3.0
       zod:
         specifier: ^3.23.0
         version: 3.23.6
     devDependencies:
-      '@acme/tsconfig':
+      '@biomejs/biome':
+        specifier: ^1.7.2
+        version: 1.7.2
+      '@soulmate/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      '@biomejs/biome':
-        specifier: 1.7.2
-        version: 1.7.2
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -186,12 +195,12 @@ importers:
         specifier: ^3.23.0
         version: 3.23.6
     devDependencies:
-      '@acme/tsconfig':
+      '@biomejs/biome':
+        specifier: ^1.7.2
+        version: 1.7.2
+      '@soulmate/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      '@biomejs/biome':
-        specifier: 1.7.2
-        version: 1.7.2
       dotenv-cli:
         specifier: ^7.4.1
         version: 7.4.1
@@ -202,18 +211,46 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
+  packages/utils:
+    dependencies:
+      '@soulmate/validators':
+        specifier: workspace:^0.1.0
+        version: link:../validators
+      effect:
+        specifier: ^3.0.4
+        version: 3.1.2
+    devDependencies:
+      '@biomejs/biome':
+        specifier: ^1.7.2
+        version: 1.7.2
+      '@soulmate/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
+      dotenv-cli:
+        specifier: ^7.4.1
+        version: 7.4.1
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
   packages/validators:
     dependencies:
+      '@soulmate/db':
+        specifier: workspace:*
+        version: link:../db
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.30.10)(zod@3.23.6)
       zod:
         specifier: ^3.23.0
         version: 3.23.6
     devDependencies:
-      '@acme/tsconfig':
+      '@biomejs/biome':
+        specifier: ^1.7.2
+        version: 1.7.2
+      '@soulmate/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      '@biomejs/biome':
-        specifier: 1.7.2
-        version: 1.7.2
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -232,7 +269,7 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.3)
     devDependencies:
-      '@acme/tsconfig':
+      '@soulmate/tsconfig':
         specifier: workspace:*
         version: link:../typescript
       eslint:
@@ -266,6 +303,11 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.1
+    dev: false
+
+  /@badrap/valita@0.3.8:
+    resolution: {integrity: sha512-aqzw+V8XSOkYlu7Aq1QhXqfxz5V6Vm6e0p6XZYZDEaGwSc6ac9OJ4B7U4BOo3mm7FzzRRHJ5yizeGKnj+REjBQ==}
+    engines: {node: '>= 16'}
     dev: false
 
   /@biomejs/biome@1.7.2:
@@ -1735,6 +1777,22 @@ packages:
       '@babel/runtime': 7.24.5
     dev: false
 
+  /@rocicorp/lock@1.0.3:
+    resolution: {integrity: sha512-aXRTG0Ul89KrV30J/p209RhMCRLIFFIT6RepvCPBicKTHaUtTlmJipgLl6QmSt5HJYYJ5P8Czp+4T4G1+6fcgQ==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      '@rocicorp/resolver': 1.0.1
+    dev: false
+
+  /@rocicorp/logger@5.2.1:
+    resolution: {integrity: sha512-/co4DJq3opjULOHe7hMAho/E2WJuv6rMOJ1QDlCKsPHZ09XkkKHDM8dPu+odmDHWBb5aMnnzC92WQLd05CTxnA==}
+    dev: false
+
+  /@rocicorp/resolver@1.0.1:
+    resolution: {integrity: sha512-9+IK9C/du8Nrqn3LaKBxJwV4H2HyIpa7HlTuc4eQ938lL4faxN6TuQV+IpvX6PxQeR14X7yMtz1f9dfiS5fvlw==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: false
+
   /@sinclair/typebox@0.32.27:
     resolution: {integrity: sha512-JHRrubCKiXi6VKlbBTpTQnExkUFasPMIaXCJYJhqVBGLliQVt1yBZZgiZo3/uSmvAdXlIIdGoTAT6RB09L0QqA==}
     dev: false
@@ -2634,6 +2692,16 @@ packages:
         optional: true
     dependencies:
       '@neondatabase/serverless': 0.9.1
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.30.10)(zod@3.23.6):
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+    dependencies:
+      drizzle-orm: 0.30.10(@neondatabase/serverless@0.9.1)
+      zod: 3.23.6
     dev: false
 
   /eastasianwidth@0.2.0:
@@ -3542,6 +3610,10 @@ packages:
       json-buffer: 3.0.1
     dev: true
 
+  /layerr@2.1.0:
+    resolution: {integrity: sha512-xDD9suWxfBYeXgqffRVH/Wqh+mqZrQcqPRn0I0ijl7iJQ7vu8gMGPt1Qop59pEW/jaIDNUN7+PX1Qk40+vuflg==}
+    dev: false
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -4326,6 +4398,21 @@ packages:
       rc: 1.2.8
     dev: true
 
+  /remeda@1.61.0:
+    resolution: {integrity: sha512-caKfSz9rDeSKBQQnlJnVW3mbVdFgxgGWQKq1XlFokqjf+hQD5gxutLGTTY2A/x24UxVyJe9gH5fAkFI63ULw4A==}
+    dev: false
+
+  /replicache@14.2.2:
+    resolution: {integrity: sha512-PBlt6C2X7wSPVUUVBKumHPTXXmPZYO/rqoTQXYLgvzPabYkKBdJbCEHjh9hXNUU5vpkzDeEmOPQqlVus9zCiBg==}
+    engines: {node: '>=14.8.0'}
+    hasBin: true
+    dependencies:
+      '@badrap/valita': 0.3.8
+      '@rocicorp/lock': 1.0.3
+      '@rocicorp/logger': 5.2.1
+      '@rocicorp/resolver': 1.0.1
+    dev: false
+
   /resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -4852,9 +4939,11 @@ packages:
     dev: true
     optional: true
 
-  /ulid@2.3.0:
-    resolution: {integrity: sha512-keqHubrlpvT6G2wH0OEfSW4mquYRcbe/J8NMmveoQOjUqmo+hXtO+ORCpWhdbZ7k72UtY61BL7haGxW6enBnjw==}
-    hasBin: true
+  /ulidx@2.3.0:
+    resolution: {integrity: sha512-36piWNqcdp9hKlQewyeehCaALy4lyx3FodsCxHuV6i0YdexSkjDOubwxEVr2yi4kh62L/0MgyrxqG4K+qtovnw==}
+    engines: {node: '>=16'}
+    dependencies:
+      layerr: 2.1.0
     dev: false
 
   /undici-types@5.26.5:
