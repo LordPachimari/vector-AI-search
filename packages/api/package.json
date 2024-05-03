@@ -1,32 +1,32 @@
 {
-  "name": "@acme/api",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
-    }
-  },
-  "license": "MIT",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "clean": "rm -rf .turbo node_modules",
-    "format": "biome format .",
-    "lint": "biome lint src",
-    "beautify": "biome format ./src --write",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
-  },
-  "dependencies": {
-    "@acme/db": "workspace:*",
-    "@acme/validators": "workspace:*",
-    "zod": "^3.23.0"
-  },
-  "devDependencies": {
-    "@acme/tsconfig": "workspace:*",
-    "@biomejs/biome": "1.7.2",
-    "typescript": "^5.4.5"
-  }
+	"name": "@acme/api",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./src/index.ts"
+		}
+	},
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --watch",
+		"clean": "rm -rf .turbo node_modules",
+		"format": "biome format ./src",
+		"lint": "biome lint src",
+		"beautify": "biome format ./src --write",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
+	},
+	"dependencies": {
+		"@acme/db": "workspace:*",
+		"@acme/validators": "workspace:*",
+		"zod": "^3.23.0"
+	},
+	"devDependencies": {
+		"@acme/tsconfig": "workspace:*",
+		"@biomejs/biome": "1.7.2",
+		"typescript": "^5.4.5"
+	}
 }

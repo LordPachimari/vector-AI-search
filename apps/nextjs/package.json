@@ -1,42 +1,42 @@
 {
-  "name": "@acme/nextjs",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "pnpm with-env next build",
-    "clean": "git clean -xdf .next .turbo node_modules",
-    "dev": "pnpm with-env next dev",
-    "start": "pnpm with-env next start",
-    "typecheck": "tsc --noEmit",
-    "with-env": "dotenv -e ../../.env --",
-    "format": "biome format .",
-    "lint": "biome lint src",
-    "beautify": "biome format ./src --write"
-  },
-  "dependencies": {
-    "@acme/api": "workspace:*",
-    "@acme/db": "workspace:*",
-    "@acme/validators": "workspace:*",
-    "@t3-oss/env-nextjs": "^0.10.0",
-    "clsx": "^2.1.1",
-    "geist": "^1.3.0",
-    "next": "^14.2.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "tailwind-merge": "^2.3.0",
-    "zod": "^3.23.0"
-  },
-  "devDependencies": {
-    "@acme/tailwind-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
-    "@biomejs/biome": "1.7.2",
-    "@types/node": "^20.12.5",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.0",
-    "dotenv-cli": "^7.4.1",
-    "jiti": "^1.21.0",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5"
-  }
+	"name": "@acme/nextjs",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "pnpm with-env next build",
+		"clean": "git clean -xdf .next .turbo node_modules",
+		"dev": "pnpm with-env next dev",
+		"start": "pnpm with-env next start",
+		"typecheck": "tsc --noEmit",
+		"with-env": "dotenv -e ../../.env --",
+		"format": "biome format ./src",
+		"lint": "biome lint src",
+		"beautify": "biome format ./src --write"
+	},
+	"dependencies": {
+		"@acme/api": "workspace:*",
+		"@acme/db": "workspace:*",
+		"@acme/validators": "workspace:*",
+		"@t3-oss/env-nextjs": "^0.10.0",
+		"clsx": "^2.1.1",
+		"geist": "^1.3.0",
+		"next": "^14.2.0",
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
+		"tailwind-merge": "^2.3.0",
+		"zod": "^3.23.0"
+	},
+	"devDependencies": {
+		"@acme/tailwind-config": "workspace:*",
+		"@acme/tsconfig": "workspace:*",
+		"@biomejs/biome": "1.7.2",
+		"@types/node": "^20.12.5",
+		"@types/react": "^18.3.1",
+		"@types/react-dom": "^18.3.0",
+		"dotenv-cli": "^7.4.1",
+		"jiti": "^1.21.0",
+		"tailwindcss": "^3.4.3",
+		"typescript": "^5.4.5"
+	}
 }
