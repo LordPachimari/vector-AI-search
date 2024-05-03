@@ -14,9 +14,9 @@ import { Button } from "~/ui/button";
 
 export default function Page() {
 	return (
-		<main className="w-full flex items-center justify-center">
-			<div className="max-w-7xl pt-20">
-				<section>
+		<main className="w-full flex items-center justify-center px-4">
+			<div className="max-w-2xl pt-20 w-full">
+				<section className="w-full">
 					<h3 className="text-6xl font-extrabold tracking-tight py-4 text-center">
 						Build your <span className="text-blue-9">profile</span>
 					</h3>

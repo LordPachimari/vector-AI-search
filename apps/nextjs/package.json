@@ -1,5 +1,5 @@
 {
-	"name": "@acme/nextjs",
+	"name": "@soulmate/nextjs",
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
@@ -15,9 +15,9 @@
 		"beautify": "biome format ./src --write"
 	},
 	"dependencies": {
-		"@acme/api": "workspace:*",
-		"@acme/db": "workspace:*",
-		"@acme/validators": "workspace:*",
+		"@soulmate/api": "workspace:*",
+		"@soulmate/db": "workspace:*",
+		"@soulmate/validators": "workspace:*",
 		"@radix-ui/react-avatar": "^1.0.4",
 		"@radix-ui/react-dialog": "^1.0.5",
 		"@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -43,9 +43,9 @@
 		"zod": "^3.23.0"
 	},
 	"devDependencies": {
-		"@acme/tailwind-config": "workspace:*",
-		"@acme/tsconfig": "workspace:*",
-		"@biomejs/biome": "1.7.2",
+		"@soulmate/tailwind-config": "workspace:*",
+		"@soulmate/tsconfig": "workspace:*",
+		"@biomejs/biome": "^1.7.2",
 		"@types/node": "^20.12.5",
 		"@types/react": "^18.3.1",
 		"@types/react-dom": "^18.3.0",

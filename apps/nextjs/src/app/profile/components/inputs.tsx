@@ -8,7 +8,6 @@ import {
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from "~/ui/select";
@@ -17,13 +16,13 @@ export function Inputs() {
 	const [hobbies, setHobbies] = useState<string[]>([]);
 	const [skills, setSkills] = useState<string[]>([]);
 	return (
-		<section className="max-w-6xl">
-			<div className="my-4">
+		<section className="w-full flex flex-col">
+			<div>
 				<label className="font-semibold">First name</label>
 				<Input placeholder="Conor Mcgregor" />
 			</div>
 
-			<div className="my-4">
+			<div className="my-2">
 				<label className="font-semibold">University</label>
 				<Select>
 					<SelectTrigger className="w-[180px]">
@@ -40,7 +39,7 @@ export function Inputs() {
 					</SelectContent>
 				</Select>
 			</div>
-			<div className="my-4">
+			<div className="my-2">
 				<label className="font-semibold">
 					{"Write you hobby. (Press enter to separate)"}
 				</label>
@@ -54,7 +53,7 @@ export function Inputs() {
 					placeholder="painting, music, sports, eat burgers"
 				/>
 			</div>
-			<div className="my-4">
+			<div className="my-2">
 				<label className="font-semibold">
 					{"Write you skills. (Press comma to separate)"}
 				</label>
@@ -69,7 +68,7 @@ export function Inputs() {
 				/>
 			</div>
 
-			<div className="my-4">
+			<div className="my-2">
 				<label className="font-semibold">
 					{"About me. (course names, uni year)"}
 				</label>

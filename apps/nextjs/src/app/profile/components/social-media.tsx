@@ -4,7 +4,7 @@ import { Button } from "~/ui/button";
 export function SocialMedia() {
 	return (
 		<section>
-			<h3 className="text-sm font-semibold text-balance overflow-clip w-[25rem]">
+			<h3 className="text-sm font-semibold text-balance overflow-clip w-full md:w-[25rem]">
 				{
 					"We will scan your tweet likes, follows and bookmarks. To find someone who share similar interests. "
 				}

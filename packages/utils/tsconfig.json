@@ -1,0 +1,10 @@
+{
+	"extends": "@pachi/tsconfig/base.json",
+	"exclude": ["node_modules"],
+	"compilerOptions": {
+		"paths": {
+			"~/*": ["./src/*"]
+		}
+	},
+	"include": ["src", "*.mjs", "*.ts"]
+}
