@@ -95,12 +95,13 @@ export default function ProfilePage({ userID }: { userID: string }) {
 						disabled={isPending}
 						onClick={async () => {
 							startTransition(async () => {
-								user && await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/store-profile`, {
-									method:"POST",
-									body:JSON.stringify({
-										user
-									})
-								});
+								user &&
+									(await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/store-profile`, {
+										method: "POST",
+										body: JSON.stringify({
+											user,
+										}),
+									}));
 							});
 						}}
 					>

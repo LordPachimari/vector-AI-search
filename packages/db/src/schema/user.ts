@@ -1,4 +1,11 @@
-import { boolean, integer, json, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import {
+	boolean,
+	integer,
+	json,
+	pgTable,
+	text,
+	varchar,
+} from "drizzle-orm/pg-core";
 
 const uni = [
 	"Monash",
@@ -24,7 +31,6 @@ export const users = pgTable("users", {
 	uni: text("uni", { enum: uni }).default("Monash"),
 	createdAt: varchar("created_at").notNull(),
 	updatedAt: varchar("updated_at").$onUpdate(() => new Date().toISOString()),
-	twitterAuth:boolean("twitter_auth"),
+	twitterAuth: boolean("twitter_auth"),
 	version: integer("version").notNull(),
-
 });

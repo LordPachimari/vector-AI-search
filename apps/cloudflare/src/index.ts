@@ -39,7 +39,7 @@ app.get("/", (c) => {
 	return c.text("Hello Hono!");
 });
 app.post("/create-user", async (c) => {
-  const client = new Pool({ connectionString: c.env.DATABASE_URL });
+	const client = new Pool({ connectionString: c.env.DATABASE_URL });
 	const db = drizzle(client, { schema: schema });
 	try {
 		const parsedBody = z.object({ id: z.string() }).parse(await c.req.json());
@@ -57,7 +57,7 @@ app.post("/create-user", async (c) => {
 	}
 });
 app.post("/pull/:spaceID", async (c) => {
-  const client = new Pool({ connectionString: c.env.DATABASE_URL });
+	const client = new Pool({ connectionString: c.env.DATABASE_URL });
 	const db = drizzle(client, { schema: schema });
 	const spaceID = SpaceIDSchema.parse(c.req.param("spaceID"));
 	const body = pullRequestSchema.parse(await c.req.json());
@@ -102,21 +102,21 @@ app.post("/push/:spaceID", async (c) => {
 });
 app.post("/store-profile", async (c) => {
 	// 1: PARSE INPUT
-	const body = z.object({user:UserSchema}).parse(await c.req.json());
+	const body = z.object({ user: UserSchema }).parse(await c.req.json());
 
 	const userID = c.req.header("x-user-id");
-  const index = new Index({
-    url: process.env.UPSTASH_URL,
-    token: process.env.UPSTASH_TOKEN,
-  });
-  await index.upsert({
-    id: `profile-${body.user.id}`,
-    data: JSON.stringify(body.user),
-    metadata: {
-      name:body.user.fullName,
-      userID,
-    },
-  })
+	const index = new Index({
+		url: process.env.UPSTASH_URL,
+		token: process.env.UPSTASH_TOKEN,
+	});
+	await index.upsert({
+		id: `profile-${body.user.id}`,
+		data: JSON.stringify(body.user),
+		metadata: {
+			name: body.user.fullName,
+			userID,
+		},
+	});
 
 	return c.json({}, 200);
 });

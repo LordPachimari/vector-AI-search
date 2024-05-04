@@ -25,7 +25,7 @@ export const UpdateUserSchema = z.object({
 		hobbies: true,
 		skills: true,
 		uni: true,
-		twitterAuth:true
+		twitterAuth: true,
 	}),
 });
 
