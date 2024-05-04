@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { generateID } from "@soulmate/utils";
 import { env } from "./env";
-import { revalidatePath } from "next/cache";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -10,7 +9,7 @@ export async function middleware(request: NextRequest) {
 	const userID = request.cookies.has("user_id");
 	const newID = generateID({ prefix: "user" });
 	if (!userID) {
-		const result = await fetch(`${env.NEXT_PUBLIC_SERVER_URL}/create-user`, {
+		const result = await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/create-user`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

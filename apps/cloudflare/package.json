@@ -1,0 +1,26 @@
+{
+	"name": "@pachi/cloudflare",
+	"version": "0.1.0",
+	"main": "src/index.ts",
+	"scripts": {
+		"dev": "wrangler dev src/index.ts",
+		"deploy": "wrangler deploy --minify src/index.ts", 
+    "deploy-dev": "wrangler deploy --minify --env dev src/index.ts",
+    "format": "biome format ./src",
+    "lint": "biome lint src",
+    "beautify": "biome format ./src --write"},
+	"dependencies": {
+		"@neondatabase/serverless": "^0.9.1",
+		"drizzle-orm": "^0.30.4",
+		"effect": "^3.0.4",
+		"hono": "^4.3.0",
+		"@soulmate/api": "^0.1.0",
+		"@soulmate/db": "^0.1.0",
+		"@soulmate/utils": "^0.1.0",
+		"@soulmate/validators": "^0.1.0"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20240403.0",
+		"wrangler": "^3.47.0"
+	}
+}

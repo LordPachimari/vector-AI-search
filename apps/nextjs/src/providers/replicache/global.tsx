@@ -35,7 +35,7 @@ export default function GlobalReplicacheProvider({
 			puller: async (req) => {
 				const now = performance.now();
 				const result = await fetch(
-					`${env.NEXT_PUBLIC_SERVER_URL}/pull/global`,
+					`${env.NEXT_PUBLIC_WORKER_URL}/pull/global`,
 					{
 						method: "POST",
 						headers: {
@@ -59,7 +59,7 @@ export default function GlobalReplicacheProvider({
 			pusher: async (req) => {
 				const now = performance.now();
 				const result = await fetch(
-					`${env.NEXT_PUBLIC_SERVER_URL}/push/global`,
+					`${env.NEXT_PUBLIC_WORKER_URL}/push/global`,
 					{
 						method: "POST",
 						headers: {

@@ -6,7 +6,7 @@ export * from "./table-name";
 
 const tableName = ["user", "chat", "json", "message"];
 
-export const client = new Pool({ connectionString: process.env.DATABASE_URL });
+export const client = new Pool({ connectionString: "" });
 export const db = drizzle(client, { schema });
 
 export type TableName = (typeof tableName)[number];

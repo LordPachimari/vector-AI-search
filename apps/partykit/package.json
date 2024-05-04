@@ -13,7 +13,7 @@
 	"dependencies": {
 		"@soulmate/db": "workspace:^0.1.0",
 		"partysocket": "^1.0.1",
-		"zod": "^3.23.0"
+		"zod": "^3.23.6"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.7.2",

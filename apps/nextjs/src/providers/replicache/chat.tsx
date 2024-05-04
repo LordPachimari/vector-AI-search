@@ -34,7 +34,7 @@ export default function ChatReplicacheProvider({
 			//@ts-ignore
 			puller: async (req) => {
 				const now = performance.now();
-				const result = await fetch(`${env.NEXT_PUBLIC_SERVER_URL}/pull/chat`, {
+				const result = await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/pull/chat`, {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
