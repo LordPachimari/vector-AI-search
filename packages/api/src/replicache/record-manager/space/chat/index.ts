@@ -21,6 +21,7 @@ export const chatCVD: GetRowsWTableName = ({
 								or(eq(chats.chatter1ID, authID), eq(chats.chatter2ID, authID)),
 							with: {
 								messages: true,
+								systemMessages: true,
 							},
 						})
 					: transaction.query.chats.findMany({
@@ -51,24 +52,14 @@ export const chatCVD: GetRowsWTableName = ({
 		yield* _(
 			Effect.all(
 				[
-					//push variants before products, as products.variants = [] modifies variants property
-					Effect.sync(() =>
-						rowsWTableName.push({
-							tableName: "messages" as const,
-							rows: chatCVD.flatMap((value) => value.messages),
-						}),
-					),
 					Effect.sync(() =>
 						rowsWTableName.push({
 							tableName: "chats" as const,
-							rows: chatCVD.map((chat) => {
-								chat.messages = [];
-								return chat;
-							}),
+							rows: chatCVD,
 						}),
 					),
 				],
-				{ concurrency: 2 },
+				{ concurrency: 1 },
 			),
 		);
 		yield* _(Effect.log(`CHAT CVD ${JSON.stringify(rowsWTableName)}`));

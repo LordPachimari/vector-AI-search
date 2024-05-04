@@ -20,8 +20,10 @@ import { ImageSection } from "./image";
 import { Inputs } from "./inputs";
 import { SocialMedia } from "./social-media";
 import { env } from "~/env";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage({ userID }: { userID: string }) {
+	const router = useRouter();
 	const params = useSearchParams();
 	const isTwitter = params.has("twitter");
 	const globalRep = useReplicache((state) => state.globalRep);
@@ -59,7 +61,7 @@ export default function ProfilePage({ userID }: { userID: string }) {
 
 	return (
 		<main className="w-full flex items-center justify-center px-4">
-			<div className="max-w-2xl pt-20 w-full">
+			<div className="max-w-2xl pt-10 w-full">
 				<section className="w-full">
 					<h3 className="text-6xl font-extrabold tracking-tight py-4 text-center">
 						Your <span className="text-blue-9">profile</span>
@@ -92,19 +94,27 @@ export default function ProfilePage({ userID }: { userID: string }) {
 					user={user}
 				/>
 				{/* <section></section> */}
-				<SocialMedia {...(user && user?.twitterAuth !==null && ({twitterAuth:user.twitterAuth}))} />
+				<SocialMedia
+					{...(user &&
+						user?.twitterAuth !== null && { twitterAuth: user.twitterAuth })}
+				/>
 				<section className="w-full flex justify-center">
 					<Button
-						disabled={isPending }
+						disabled={isPending}
 						onClick={async () => {
 							startTransition(async () => {
-								user &&
-									(await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/store-profile`, {
+								if (user) {
+									await fetch(`${env.NEXT_PUBLIC_SERVER_URL}/store-profile`, {
 										method: "POST",
+										headers: {
+											"Content-Type": "application/json",
+											"x-user-id": userID,
+										},
 										body: JSON.stringify({
 											user,
 										}),
-									}));
+									}).then(() => router.push("/soulmate"));
+								}
 							});
 						}}
 					>

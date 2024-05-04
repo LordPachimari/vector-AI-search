@@ -10,11 +10,16 @@ const authClient = new auth.OAuth2User({
 	callback: process.env.TWITTER_REDIRECT_URL ?? "",
 	scopes: ["tweet.read", "users.read", "bookmark.read", "like.read"],
 });
+
+const index = new Index({
+	url: process.env.UPSTASH_URL,
+	token: process.env.UPSTASH_TOKEN,
+});
 const app = new Elysia()
 	.use(
 		cors({
-			// origin: /localhost.*/,
-			origin: /.*\.uni-soulmate\.vercel\.app$/,
+			origin: /localhost.*/,
+			// origin: [/.*\.uni-soulmate\.vercel\.app$/, /.*\.uni-soulmate\.fly\.dev$/ ],
 			methods: ["POST", "OPTIONS", "GET", "PUT"],
 			credentials: true,
 		}),
@@ -65,6 +70,40 @@ const app = new Elysia()
 				}));
 		} catch (err) {
 			console.error("ERROR CATCHED", JSON.stringify(err));
+			return error(500, "Internal Server Error");
+		}
+	})
+	.post("/store-profile", async ({ body, headers }) => {
+		// 1: PARSE INPUT
+		const userBody = body as { user: { id: string; fullName: string } };
+
+		const userID = headers["x-user-id"];
+		try {
+			await index.upsert({
+				id: `profile-${userBody.user.id}`,
+				data: JSON.stringify(userBody.user),
+				metadata: {
+					name: userBody.user.id,
+					userID,
+				},
+			});
+		} catch (err) {
+			console.log(err);
+			return error(500, "Internal Server Error");
+		}
+	})
+	.post("/get-profiles", async ({ body }) => {
+		const question = body as string;
+		try {
+			const result = await index.query({
+				topK: 5,
+				data: question,
+				includeMetadata: true,
+			});
+			console.log("results", JSON.stringify(result));
+			return result.map((r) => r.metadata?.userID as string);
+		} catch (err) {
+			console.log(err);
 			return error(500, "Internal Server Error");
 		}
 	})

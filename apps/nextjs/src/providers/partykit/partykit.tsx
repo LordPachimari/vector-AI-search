@@ -8,10 +8,8 @@ import { useReplicache } from "~/zustand/replicache";
 
 export default function PartykitProvider({
 	children,
-	userID,
 }: Readonly<{
 	children: React.ReactNode;
-	userID: string | undefined | null;
 }>) {
 	const { chatRep, globalRep } = useReplicache();
 
@@ -27,6 +25,7 @@ export default function PartykitProvider({
 		},
 		onMessage(e) {
 			const space = e.data as SpaceID;
+			console.log("space", space);
 			if (space === "chat") {
 				return chatRep?.pull();
 			}

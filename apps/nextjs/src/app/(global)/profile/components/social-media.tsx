@@ -5,7 +5,9 @@ import { toast } from "sonner";
 import { getTwitterURL } from "~/actions/twitter-auth";
 import { Button } from "~/ui/button";
 
-export function SocialMedia({twitterAuth}:{twitterAuth?:boolean | undefined}) {
+export function SocialMedia({
+	twitterAuth,
+}: { twitterAuth?: boolean | undefined }) {
 	const [isPending, startTransition] = useTransition();
 
 	useEffect(() => {
@@ -19,28 +21,26 @@ export function SocialMedia({twitterAuth}:{twitterAuth?:boolean | undefined}) {
 				}
 			</h3>
 			<div className="flex gap-2 items-center">
-
-			<Button
-				variant="outline"
-				className="border-blue-9 my-2 hover:bg-blue-3 text-blue-9 hover:text-blue-10 flex gap-2"
-				disabled={isPending || twitterAuth}
-				onClick={async () => {
-					startTransition(async () => {
-						await getTwitterURL();
-					});
-				}}
-			>
-				<TwitterLogoIcon />
-				Twitter
-			</Button>
-			{/* {twitterAuth && (
+				<Button
+					variant="outline"
+					className="border-blue-9 my-2 hover:bg-blue-3 text-blue-9 hover:text-blue-10 flex gap-2"
+					disabled={isPending || twitterAuth}
+					onClick={async () => {
+						startTransition(async () => {
+							await getTwitterURL();
+						});
+					}}
+				>
+					<TwitterLogoIcon />
+					Twitter
+				</Button>
+				{/* {twitterAuth && (
 				
 			<CircleCheck className="text-blue-9"/>
 			)} */}
 
-			<CircleCheck className="text-blue-9"/>
+				<CircleCheck className="text-blue-9" />
 			</div>
-			
 		</section>
 	);
 }

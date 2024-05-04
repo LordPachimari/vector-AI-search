@@ -9,6 +9,7 @@ import { cn } from "~/utils/cn";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "~/ui/toaster";
 import { ThemeToggle } from "~/providers/themes";
+import { Header } from "~/components/header";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
@@ -46,10 +47,8 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 				)}
 			>
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+					<Header />
 					{props.children}
-					<div className="absolute bottom-4 right-4">
-						<ThemeToggle />
-					</div>
 					<Toaster />
 				</ThemeProvider>
 			</body>
