@@ -10,7 +10,11 @@ async function createUser(tx: WriteTransaction, input: CreateUser) {
 
 async function updateUser(tx: WriteTransaction, input: UpdateUser) {
 	const { id, updates } = input;
+	console.log("id", id);
+
 	const user = (await getEntityFromID(tx, id)) as User | undefined;
+	console.log("user", user);
+
 	if (!user) {
 		console.info("User  not found");
 		throw new Error("User not found");

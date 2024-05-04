@@ -53,6 +53,9 @@ export default function ProfilePage({ userID }: { userID: string }) {
 			);
 		}
 	}, [isTwitter, updateProfile, user]);
+	useEffect(() => {
+		if (isPending) toast.info("Storing Data...");
+	}, [isPending]);
 
 	return (
 		<main className="w-full flex items-center justify-center px-4">

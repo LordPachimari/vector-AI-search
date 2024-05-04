@@ -13,11 +13,14 @@ import {
 } from "@soulmate/validators";
 import { Effect } from "effect";
 import { pull, push } from "@soulmate/api";
+import { UnknownExceptionLogger } from "@soulmate/utils";
 
 export type Bindings = {
 	DATABASE_URL: string;
 	KV: KVNamespace;
 	PARTYKIT_ORIGIN: string;
+	UPSTASH_URL: string;
+	UPSTASH_TOKEN: string;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -25,11 +28,7 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.use(
 	"*",
 	cors({
-		origin: [
-			"http://localhost:3000",
-			"https://pachi-dev.vercel.app",
-			"https://pachi.vercel.app",
-		],
+		origin: ["http://localhost:3000", "https://uni-soulmate.vercel.app"],
 		allowMethods: ["POST", "GET", "OPTIONS"],
 		maxAge: 600,
 		credentials: true,
@@ -70,7 +69,7 @@ app.post("/pull/:spaceID", async (c) => {
 		db,
 		spaceID,
 		authID: userID,
-	}).pipe(Effect.orDie);
+	}).pipe(Effect.orDieWith((e) => UnknownExceptionLogger(e, "pull error")));
 
 	// 3: RUN PROMISE
 	const pullResponse = await Effect.runPromise(pullEffect);
@@ -79,7 +78,8 @@ app.post("/pull/:spaceID", async (c) => {
 });
 app.post("/push/:spaceID", async (c) => {
 	// 1: PARSE INPUT
-	const db = c.get("db" as never) as Db;
+	const client = new Pool({ connectionString: c.env.DATABASE_URL });
+	const db = drizzle(client, { schema: schema });
 	const spaceID = SpaceIDSchema.parse(c.req.param("spaceID"));
 	const body = pushRequestSchema.parse(await c.req.json());
 
@@ -93,7 +93,7 @@ app.post("/push/:spaceID", async (c) => {
 		spaceID,
 		authID: userID,
 		partyKitOrigin: c.env.PARTYKIT_ORIGIN,
-	}).pipe(Effect.orDie);
+	}).pipe(Effect.orDieWith((e) => UnknownExceptionLogger(e, "pull error")));
 
 	// 3: RUN PROMISE
 	await Effect.runPromise(pushEffect);
@@ -106,8 +106,8 @@ app.post("/store-profile", async (c) => {
 
 	const userID = c.req.header("x-user-id");
 	const index = new Index({
-		url: process.env.UPSTASH_URL,
-		token: process.env.UPSTASH_TOKEN,
+		url: c.env.UPSTASH_URL,
+		token: c.env.UPSTASH_TOKEN,
 	});
 	await index.upsert({
 		id: `profile-${body.user.id}`,

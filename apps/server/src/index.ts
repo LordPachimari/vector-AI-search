@@ -13,7 +13,8 @@ const authClient = new auth.OAuth2User({
 const app = new Elysia()
 	.use(
 		cors({
-			origin: /localhost.*/,
+			// origin: /localhost.*/,
+			origin: /.*\.uni-soulmate\.vercel\.app$/,
 			methods: ["POST", "OPTIONS", "GET", "PUT"],
 			credentials: true,
 		}),
