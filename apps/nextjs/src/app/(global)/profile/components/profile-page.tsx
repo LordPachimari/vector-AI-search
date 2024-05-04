@@ -92,10 +92,10 @@ export default function ProfilePage({ userID }: { userID: string }) {
 					user={user}
 				/>
 				{/* <section></section> */}
-				<SocialMedia />
+				<SocialMedia {...(user && user?.twitterAuth !==null && ({twitterAuth:user.twitterAuth}))} />
 				<section className="w-full flex justify-center">
 					<Button
-						disabled={isPending}
+						disabled={isPending }
 						onClick={async () => {
 							startTransition(async () => {
 								user &&
