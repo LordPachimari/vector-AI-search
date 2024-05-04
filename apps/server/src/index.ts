@@ -18,13 +18,15 @@ const index = new Index({
 const app = new Elysia()
 	.use(
 		cors({
-			origin: /localhost.*/,
-			// origin: [/.*\.uni-soulmate\.vercel\.app$/, /.*\.uni-soulmate\.fly\.dev$/ ],
+			origin: [
+				/^https:\/\/uni-soulmate\.vercel\.app$/,
+				/^https:\/\/soulmate-dev\.pachimari\.workers\.dev\/?$/,
+			],
 			methods: ["POST", "OPTIONS", "GET", "PUT"],
 			credentials: true,
 		}),
 	)
-	.post("/twitter-auth-url", async ({ store }) => {
+	.post("/twitter-auth-url", async () => {
 		try {
 			const url = authClient.generateAuthURL({
 				state: STATE,
@@ -37,7 +39,7 @@ const app = new Elysia()
 			return error(500, "Internal Server Error");
 		}
 	})
-	.post("/store-twitter-data", async ({ store, headers }) => {
+	.post("/store-twitter-data", async ({ headers }) => {
 		const code = headers["x-twitter-code"];
 		if (!code) return error(400, "Bad Request");
 		const client = new Client(authClient);
@@ -76,7 +78,6 @@ const app = new Elysia()
 	.post("/store-profile", async ({ body, headers }) => {
 		// 1: PARSE INPUT
 		const userBody = body as { user: { id: string; fullName: string } };
-
 		const userID = headers["x-user-id"];
 		try {
 			await index.upsert({

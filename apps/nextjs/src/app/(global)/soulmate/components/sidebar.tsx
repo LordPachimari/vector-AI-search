@@ -37,7 +37,7 @@ const Sidebar = ({
 				)}
 			>
 				<Button
-					className="w-[10rem]"
+					className="w-[10rem] text-white"
 					onClick={() => {
 						setChatID(null);
 						setAI(null);
