@@ -3,7 +3,6 @@ import { Effect, pipe } from "effect";
 import { UnknownExceptionLogger } from "@soulmate/utils";
 
 import type { GetRowsWTableName } from "../types";
-import { eq, schema } from "@soulmate/db";
 
 export const globalCVD: GetRowsWTableName = ({
 	transaction,
@@ -17,7 +16,7 @@ export const globalCVD: GetRowsWTableName = ({
 				Effect.tryPromise(() =>
 					fullRows
 						? transaction.query.users.findFirst({
-								where: () => eq(schema.users.id, authID),
+								where: (users, { eq }) => eq(users.id, authID),
 							})
 						: transaction.query.users.findFirst({
 								columns: {
@@ -25,7 +24,7 @@ export const globalCVD: GetRowsWTableName = ({
 									version: true,
 									replicachePK: true,
 								},
-								where: () => eq(schema.users.id, authID),
+								where: (users, { eq }) => eq(users.id, authID),
 							}),
 				),
 				Effect.map((user) => [

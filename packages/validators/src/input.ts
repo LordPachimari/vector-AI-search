@@ -10,16 +10,22 @@ export const CreateUserSchema = z.object({
 export type CreateUser = z.infer<typeof CreateUserSchema>;
 
 export type CreateChat = z.infer<typeof CreateChatSchema>;
-export const UserSchema = createSelectSchema(schema.users);
+export const UserSchema = createSelectSchema(schema.users).extend({
+	hobbies: z.array(z.string()).optional(),
+
+	skills: z.array(z.string()).optional(),
+});
 export type User = z.infer<typeof UserSchema>;
 export const UpdateUserSchema = z.object({
 	id: z.string(),
-	updates: UserSchema.pick({
+	updates: UserSchema.partial().pick({
+		fullName: true,
 		avatarURL: true,
 		about: true,
 		hobbies: true,
 		skills: true,
 		uni: true,
+		twitterAuth: true,
 	}),
 });
 

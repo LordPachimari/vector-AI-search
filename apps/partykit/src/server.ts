@@ -7,7 +7,8 @@ export default class WebSocketServer implements Party.Server {
 	async onRequest(request: Party.Request) {
 		// push new message
 		if (request.method === "POST") {
-			this.room.broadcast("");
+			const spaceID = await request.text();
+			this.room.broadcast(spaceID as string);
 			return new Response("OK");
 		}
 

@@ -6,7 +6,7 @@ export const messages = pgTable(
 	"messages",
 	{
 		id: varchar("id").notNull().primaryKey(),
-		text: varchar("text").notNull().primaryKey(),
+		text: varchar("text").notNull(),
 		replicachePK: varchar("replicache_pk").notNull(),
 		createdAt: varchar("created_at").notNull(),
 		updatedAt: varchar("updated_at").$onUpdate(() => new Date().toISOString()),

@@ -10,7 +10,6 @@ export type Table = UserTable | JsonTable | MessageTable | ChatTable;
 export const tableNameToTableMap: Record<TableName, Table> = {
 	users,
 	json: jsonTable,
-	jsonTable,
 	messages,
 	chats,
 };

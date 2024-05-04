@@ -18,16 +18,23 @@ export default function ChatReplicacheProvider({
 	const setChatRep = useReplicache((state) => state.setChatRep);
 
 	useEffect(() => {
-		if (chatRep || !userID) return;
+		if (chatRep) return;
+		if (!userID) return window.location.reload();
 		const r = new Replicache({
 			name: "global",
 			licenseKey: env.NEXT_PUBLIC_REPLICACHE_KEY,
 			pullInterval: null,
 			mutators: ChatMutators,
+			indexes: {
+				id: {
+					jsonPointer: "/id",
+					allowEmpty: true,
+				},
+			},
 			//@ts-ignore
 			puller: async (req) => {
 				const now = performance.now();
-				const result = await fetch(`${env.NEXT_PUBLIC_SERVER_URL}/pull/chat`, {
+				const result = await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/pull/chat`, {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
