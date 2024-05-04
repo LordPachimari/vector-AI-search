@@ -1,5 +1,10 @@
 import { updateUser } from "./user";
-import { createChat, createSystemMessage } from "./chat";
+import {
+	clearChat,
+	createChat,
+	createMessage,
+	createSystemMessage,
+} from "./chat";
 
 const GlobalMutators = {
 	updateUser,
@@ -12,6 +17,8 @@ export type GlobalMutatorsMapType = typeof GlobalMutatorsMap;
 const ChatMutators = {
 	createChat,
 	createSystemMessage,
+	createMessage,
+	clearChat,
 };
 
 export const ChatMutatorsMap = new Map(Object.entries(ChatMutators));

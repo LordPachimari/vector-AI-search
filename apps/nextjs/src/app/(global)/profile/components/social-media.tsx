@@ -34,12 +34,7 @@ export function SocialMedia({
 					<TwitterLogoIcon />
 					Twitter
 				</Button>
-				{/* {twitterAuth && (
-				
-			<CircleCheck className="text-blue-9"/>
-			)} */}
-
-				<CircleCheck className="text-blue-9" />
+				{twitterAuth && <CircleCheck className="text-blue-9" />}
 			</div>
 		</section>
 	);

@@ -1,21 +1,38 @@
 "use client";
 import { useQueryState } from "nuqs";
 import { memo } from "react";
-import SoulmateFinder from "~/components/chat/soulmate-finder";
 import Sidebar from "./sidebar";
+import { SoulmateFinderChat } from "~/components/chat/soulmate-finder";
+import { RealChat } from "~/components/chat/real-chat";
+import { AIChat } from "~/components/chat/ai-chat";
 // export interface LayoutProps {
 // }
 
 const RawLayout = ({ userID }: { userID: string | undefined | null }) => {
-	const [view, setView] = useQueryState("view", {
+	const [chatID, setChatID] = useQueryState("chatID", {
 		history: "push",
-		defaultValue: "soulmate" as const,
+	});
+	const [AI, setAI] = useQueryState("AI", {
+		history: "push",
 	});
 	return (
-		<Sidebar>
+		<Sidebar
+			setChatID={setChatID}
+			chatID={chatID}
+			userID={userID}
+			setAI={setAI}
+		>
 			<div className="w-full flex flex-col justify-between relative md:pl-60 pt-30 px-4 min-h-screen max-h-screen">
 				<div className="h-16" />
-				{view === "soulmate" && <SoulmateFinder userID={userID} />}
+				{!chatID && (
+					<SoulmateFinderChat
+						userID={userID}
+						setChatID={setChatID}
+						setAI={setAI}
+					/>
+				)}
+				{chatID && AI && <AIChat userID={userID} chatID={chatID} />}
+				{chatID && !AI && <RealChat userID={userID} chatID={chatID} />}
 			</div>
 		</Sidebar>
 	);

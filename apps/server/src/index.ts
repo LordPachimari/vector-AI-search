@@ -101,7 +101,9 @@ const app = new Elysia()
 				includeMetadata: true,
 			});
 			console.log("results", JSON.stringify(result));
-			return result.map((r) => r.metadata?.userID as string);
+			return result
+				.filter((r) => r.score > 0.75)
+				.map((r) => r.metadata?.userID as string);
 		} catch (err) {
 			console.log(err);
 			return error(500, "Internal Server Error");

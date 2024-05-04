@@ -452,6 +452,8 @@ const getFullRows = ({
 							with: {
 								messages: true,
 								systemMessages: true,
+								chatter1: true,
+								chatter2: true,
 							},
 						}),
 					),

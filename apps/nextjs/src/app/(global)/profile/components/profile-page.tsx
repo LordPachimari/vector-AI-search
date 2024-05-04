@@ -61,7 +61,7 @@ export default function ProfilePage({ userID }: { userID: string }) {
 
 	return (
 		<main className="w-full flex items-center justify-center px-4">
-			<div className="max-w-2xl pt-10 w-full">
+			<div className="max-w-2xl pt-14 w-full">
 				<section className="w-full">
 					<h3 className="text-6xl font-extrabold tracking-tight py-4 text-center">
 						Your <span className="text-blue-9">profile</span>

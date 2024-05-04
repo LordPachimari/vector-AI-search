@@ -24,6 +24,7 @@ export const push = ({
 	spaceID,
 	partyKitOrigin,
 	serverURL,
+	GOOGLE_API_KEY,
 }: {
 	body: PushRequest;
 	authID: string | undefined;
@@ -31,6 +32,7 @@ export const push = ({
 	spaceID: SpaceID;
 	partyKitOrigin: string;
 	serverURL: string;
+	GOOGLE_API_KEY: string;
 }) =>
 	Effect.gen(function* (_) {
 		if (!authID) return;
@@ -62,6 +64,7 @@ export const push = ({
 												tableNameToTableMap,
 												userID: authID,
 												serverURL,
+												GOOGLE_API_KEY,
 											}),
 										);
 										// 2: GET CLIENT ROW

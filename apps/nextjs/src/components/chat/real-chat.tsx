@@ -5,27 +5,24 @@ import { ArrowUp } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ReplicacheStore } from "~/replicache-store";
 import { Button } from "~/ui/button";
+import { ScrollArea } from "~/ui/scrollarea";
 import { Textarea } from "~/ui/textarea";
 import { useReplicache } from "~/zustand/replicache";
-import { ChatMessage, ChatProfileAnswer, ChatQuestion } from "./chat-message";
-import { ScrollArea } from "~/ui/scrollarea";
+import { ChatMessage, ChatQuestion } from "./chat-message";
+import { Avatar, AvatarFallback, AvatarImage } from "~/ui/avatar";
+import ImagePlaceholder from "../image-placeholder";
 
-export function SoulmateFinderChat({
+export function RealChat({
 	userID,
-	setChatID,
-	setAI,
+	chatID,
 }: {
 	userID: string | null | undefined;
-	setChatID: (id: string | null) => void;
-	setAI: (id: string | null) => void;
+	chatID: string | null | undefined;
 }) {
 	const [value, setValue] = useState("");
 	const chatRep = useReplicache((state) => state.chatRep);
-	const chat = ReplicacheStore.getByPK<ChatType>(
-		chatRep,
-		`soulmate_chat_${userID}`,
-	);
-	const messages = chat?.systemMessages ?? [];
+	const chat = ReplicacheStore.getByID<ChatType>(chatRep, chatID ?? "");
+	const messages = chat?.messages ?? [];
 	const endOfMessagesRef = useRef<HTMLDivElement>(null);
 	const scrollToBottom = () => {
 		endOfMessagesRef.current?.scrollIntoView({ behavior: "instant" });
@@ -41,65 +38,63 @@ export function SoulmateFinderChat({
 			const newID = generateID({ prefix: "message" });
 			userID &&
 				chat &&
-				(await chatRep?.mutate.createSystemMessage({
+				(await chatRep?.mutate.createMessage({
 					message: {
 						id: newID,
 						createdAt: new Date().toISOString(),
-						chatID: `soulmate_chat_${userID}`,
-						question: text,
+						chatID: chat.id,
+						text,
 						version: 0,
-						loading: true,
+						replicachePK: newID,
+						senderID: userID,
 					},
-					isProfileFinder: true,
 				}));
 			setValue("");
 		},
 		[userID, chatRep, chat],
 	);
+
+	console.log("chat", chat);
+	console.log("messages", messages);
 	const textArea = useRef<HTMLTextAreaElement>(null);
 
 	return (
 		<main className="w-full flex justify-center max-h-screen">
-			<div className="w-full flex flex-col max-w-4xl">
-				<ScrollArea className="w-full h-[calc(100vh-200px)] p-4">
+			<div className="w-full flex flex-col gap-0 max-w-4xl">
+				<div className="bg-background flex h-[80px] items-center rounded-lg justify-center">
+					<Avatar className="w-[4rem] h-[4rem]">
+						<AvatarImage
+							src={
+								chat?.chatter1ID === userID
+									? chat?.chatter2?.avatarURL ?? undefined
+									: chat?.chatter1?.avatarURL ?? undefined
+							}
+							alt="avatar image"
+						/>
+						<AvatarFallback className="bg-blue-4 hover:bg-blue-5">
+							<ImagePlaceholder />
+						</AvatarFallback>
+					</Avatar>
+				</div>
+				<ScrollArea className="w-full h-[calc(100vh-280px)] p-4">
 					{messages.map((msg, i) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 						<ChatMessage index={i} key={i} isLast={i === messages.length - 1}>
-							<ChatQuestion>{msg.question}</ChatQuestion>
-							<ChatProfileAnswer
-								loading={!!msg.loading}
-								profileIDs={msg.answer ? (msg.answer as string[]) : []}
-								setChatID={setChatID}
-								userID={userID}
-								setAI={setAI}
-							/>
+							<ChatQuestion isLeft={msg.senderID !== userID}>
+								{msg.text}
+							</ChatQuestion>
 						</ChatMessage>
 					))}
 					<div ref={endOfMessagesRef} />
 				</ScrollArea>
+				{/* </div> */}
 				<div className="flex w-full items-center mb-6 gap-2 justify-center">
-					{messages.length > 0 && (
-						<Button
-							onClick={async () =>
-								userID &&
-								(await chatRep?.mutate.clearChat({
-									chatID: `soulmate_chat_${userID}`,
-								}))
-							}
-							variant={"ghost"}
-							className="fixed bg-blue-3 text-blue-9 hover:bg-blue-4 hover:text-blue-9 bottom-36"
-						>
-							Clear
-						</Button>
-					)}
 					<Textarea
 						ref={textArea}
 						value={value}
-						placeholder="Find someone who likes..."
 						onChange={(e) => setValue(e.target.value)}
 						onKeyDown={async (e) => {
-							const isLoading = messages.some((m) => m.loading === true);
-							if (e.key === "Enter" && !e.shiftKey && !isLoading) {
+							if (e.key === "Enter" && !e.shiftKey) {
 								e.preventDefault();
 								await onSend(value);
 							}
@@ -109,10 +104,7 @@ export function SoulmateFinderChat({
 					<Button
 						size="icon"
 						onClick={async () => await onSend(value)}
-						disabled={
-							value.trim().length < 1 ||
-							messages.some((m) => m.loading === true)
-						}
+						disabled={value.trim().length < 1}
 					>
 						<ArrowUp className="h-5 w-5" />
 					</Button>

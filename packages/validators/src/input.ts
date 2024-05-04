@@ -39,14 +39,22 @@ export const SystemMessageSchema = createInsertSchema(
 });
 export const CreateSystemMessageSchema = z.object({
 	message: SystemMessageSchema,
+	isProfileFinder: z.boolean(),
+	targetUserID: z.string().optional(),
 });
 export type SystemMessage = z.infer<typeof SystemMessageSchema>;
 export type CreateSystemMessage = z.infer<typeof CreateSystemMessageSchema>;
-export const MessageSchema = createSelectSchema(schema.messages);
+export const MessageSchema = createInsertSchema(schema.messages);
 export type Message = z.infer<typeof MessageSchema>;
 
+export const CreateMessageSchema = z.object({
+	message: MessageSchema,
+});
+export type CreateMessage = z.infer<typeof CreateMessageSchema>;
 export const ChatSchema = createInsertSchema(schema.chats).extend({
 	messages: z.array(MessageSchema).optional(),
 	systemMessages: z.array(SystemMessageSchema).optional(),
+	chatter1: UserSchema.optional(),
+	chatter2: UserSchema.optional(),
 });
 export type Chat = z.infer<typeof ChatSchema>;

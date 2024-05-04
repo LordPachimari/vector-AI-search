@@ -258,6 +258,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@google/generative-ai':
+        specifier: ^0.10.0
+        version: 0.10.0
       '@soulmate/db':
         specifier: workspace:*
         version: link:../db
@@ -267,15 +270,6 @@ importers:
       '@soulmate/validators':
         specifier: workspace:*
         version: link:../validators
-      '@upstash/ratelimit':
-        specifier: ^1.1.3
-        version: 1.1.3
-      '@upstash/redis':
-        specifier: ^1.30.0
-        version: 1.30.0
-      '@upstash/vector':
-        specifier: ^1.0.7
-        version: 1.0.7
       remeda:
         specifier: ^1.61.0
         version: 1.61.0
@@ -1570,6 +1564,11 @@ packages:
       yargs: 17.7.2
     dev: true
 
+  /@google/generative-ai@0.10.0:
+    resolution: {integrity: sha512-fZJEL8DcDgvBCguLdaAdBBEoh+83LDXK3m9rVh5iksvwVJDgZqkpsLGKJuM5FEBKltWhbJ62WSyMEUGgy8eMUg==}
+    engines: {node: '>=18.0.0'}
+    dev: false
+
   /@hono/node-server@1.11.1:
     resolution: {integrity: sha512-GW1Iomhmm1o4Z+X57xGby8A35Cu9UZLL7pSMdqDBkD99U5cywff8F+8hLk5aBTzNubnsFAvWQ/fZjNwPsEn9lA==}
     engines: {node: '>=18.14.1'}
@@ -2779,25 +2778,6 @@ packages:
       std-env: 3.7.0
     dev: false
 
-  /@upstash/core-analytics@0.0.8:
-    resolution: {integrity: sha512-MCJoF+Y8fkzq4NRLG7kEHjtGyMsZ2DICBdmEdwoK9umoSrfkzgBlYdZiHTIaewyt9PGaMZCHOasz0LAuMpxwxQ==}
-    engines: {node: '>=16.0.0'}
-    dependencies:
-      '@upstash/redis': 1.30.0
-    dev: false
-
-  /@upstash/ratelimit@1.1.3:
-    resolution: {integrity: sha512-rl+GMvPdZJ9xPDIvIrqRl/g0nzAEaH75hwR5lXAKW8zPPplD/AeliDCHwuwcFCPIjg49FKyA1oc5H473WkVFrQ==}
-    dependencies:
-      '@upstash/core-analytics': 0.0.8
-    dev: false
-
-  /@upstash/redis@1.30.0:
-    resolution: {integrity: sha512-bkxl2n7qls27hONXNyItM6ccRT0NBJ8c6zl83wx+TlODpYXehgeiUJTkcTaXLp7hk+zy6Mqpzpeo3GX+wZSvBw==}
-    dependencies:
-      crypto-js: 4.2.0
-    dev: false
-
   /@upstash/vector@1.0.7:
     resolution: {integrity: sha512-IJlobmXxocxbwSiMsJRbx8VE98GdjRk058hyDqmzXhKmGLJkeAgfoDAEZWkGPuFAtqdNYfpV2qVS+mk/KMk4JQ==}
     dev: false
@@ -3309,10 +3289,6 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-
-  /crypto-js@4.2.0:
-    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
-    dev: false
 
   /cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}

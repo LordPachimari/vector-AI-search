@@ -20,6 +20,7 @@
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
 	},
 	"dependencies": {
+		"@google/generative-ai": "^0.10.0",
 		"@soulmate/db": "workspace:*",
 		"@soulmate/utils": "workspace:*",
 		"@soulmate/validators": "workspace:*",

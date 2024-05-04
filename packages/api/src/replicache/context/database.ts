@@ -9,6 +9,7 @@ class Database extends Context.Tag("Database")<
 		readonly tableNameToTableMap?: TableNameToTableMap;
 		readonly userID: string;
 		readonly serverURL: string;
+		readonly GOOGLE_API_KEY: string;
 	}
 >() {}
 

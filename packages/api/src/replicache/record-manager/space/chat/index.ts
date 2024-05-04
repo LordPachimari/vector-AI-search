@@ -22,6 +22,8 @@ export const chatCVD: GetRowsWTableName = ({
 							with: {
 								messages: true,
 								systemMessages: true,
+								chatter1: true,
+								chatter2: true,
 							},
 						})
 					: transaction.query.chats.findMany({

@@ -1,4 +1,3 @@
-import ChatReplicacheProvider from "~/providers/replicache/chat";
 import { Layout } from "./components/layout";
 import { cookies } from "next/headers";
 

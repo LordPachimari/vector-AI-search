@@ -69,8 +69,9 @@ function createGetByIDs<T>(rep: Replicache | null, ids: string[]): T[] {
 		rep,
 		async (tx) => {
 			const items: T[] = [];
+			const set = new Set();
 			for (const id of ids) {
-				if (id) {
+				if (id && !set.has(id)) {
 					const [item] = await tx
 						.scan({
 							indexName: "id",
@@ -82,7 +83,10 @@ function createGetByIDs<T>(rep: Replicache | null, ids: string[]): T[] {
 						})
 						.values()
 						.toArray();
-					items.push(item as T);
+					if (item) {
+						set.add(id);
+						items.push(item as T);
+					}
 				}
 			}
 			setItemsState(items);

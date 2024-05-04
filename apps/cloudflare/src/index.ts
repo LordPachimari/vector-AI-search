@@ -17,9 +17,8 @@ export type Bindings = {
 	DATABASE_URL: string;
 	KV: KVNamespace;
 	PARTYKIT_ORIGIN: string;
-	UPSTASH_URL: string;
-	UPSTASH_TOKEN: string;
 	SERVER_URL: string;
+	GOOGLE_API_KEY: string;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -116,6 +115,7 @@ app.post("/push/:spaceID", async (c) => {
 		authID: userID,
 		partyKitOrigin: c.env.PARTYKIT_ORIGIN,
 		serverURL: c.env.SERVER_URL,
+		GOOGLE_API_KEY: c.env.GOOGLE_API_KEY,
 	}).pipe(Effect.orDieWith((e) => UnknownExceptionLogger(e, "pull error")));
 
 	// 3: RUN PROMISE

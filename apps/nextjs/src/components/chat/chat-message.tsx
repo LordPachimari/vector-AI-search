@@ -2,8 +2,9 @@
 import type { User } from "@soulmate/validators";
 import { motion } from "framer-motion";
 import { Loader2Icon } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import Markdown from "react-markdown";
+import { toast } from "sonner";
 import { ReplicacheStore } from "~/replicache-store";
 import { Avatar, AvatarFallback, AvatarImage } from "~/ui/avatar";
 import { Badge } from "~/ui/badge";
@@ -13,37 +14,77 @@ import { cn } from "~/utils/cn";
 import { useReplicache } from "~/zustand/replicache";
 
 export function ChatAnswer({
-	children: message,
-	loading = false,
-}: {
-	children: string;
-	loading?: boolean;
-}) {
+	loading,
+	text,
+}: { text: string | undefined; loading?: boolean }) {
 	return (
-		<div className="flex h-max w-full flex-col items-start gap-5">
-			{loading ? (
-				<Loader2Icon className="animate-spin text-blue-9" />
-			) : (
-				<div className=" h-full w-full text-lg text-white/60">
-					<Markdown>{message}</Markdown>
-				</div>
-			)}
+		<div className={cn("w-full flex justify-start my-2")}>
+			<Card
+				className={`h-max w-fit max-w-xl p-2  ${
+					text && text.length > 200 ? "text-xl" : "text-2xl"
+				}`}
+			>
+				{loading ? (
+					<Loader2Icon className="animate-spin text-blue-9" />
+				) : (
+					<Markdown>{text}</Markdown>
+				)}
+			</Card>
 		</div>
 	);
 }
-
+function sortString(str: string) {
+	return str.split("").sort().join("");
+}
 export function ChatProfileAnswer({
 	loading,
 	profileIDs,
-}: { loading?: boolean; profileIDs: string[] }) {
+	setChatID,
+	setAI,
+	userID,
+}: {
+	loading?: boolean;
+	profileIDs: string[];
+	setChatID: (id: string | null) => void;
+	setAI: (id: string | null) => void;
+	userID: string | null | undefined;
+}) {
 	const globalRep = useReplicache((state) => state.globalRep);
+	const chatRep = useReplicache((state) => state.chatRep);
 	const profiles = ReplicacheStore.getByIDs<User>(globalRep, profileIDs);
+	const createChat = useCallback(
+		async (chatter2ID: string, isAI: boolean) => {
+			const newID = isAI
+				? `chat_ai_${sortString(`${userID}${chatter2ID}`)}`
+				: `chat_${sortString(`${userID}${chatter2ID}`)}`;
+			try {
+				userID &&
+					(await chatRep?.mutate.createChat({
+						chat: {
+							id: newID,
+							chatter1ID: userID,
+							chatter2ID,
+							createdAt: new Date().toISOString(),
+							replicachePK: newID,
+							version: 0,
+							isAI,
+						},
+					}));
+			} catch (error) {
+				return toast.info("Chat already exist");
+			}
+			setChatID(newID);
+
+			isAI && setAI("true");
+		},
+		[chatRep, userID, setChatID, setAI],
+	);
 	return (
 		<div className="flex h-max w-full flex-col items-start gap-5">
 			{loading ? (
 				<Loader2Icon className="animate-spin text-blue-9" />
 			) : (
-				profiles?.map((p) => (
+				profiles.map((p) => (
 					<Card
 						key={p.id}
 						className={cn(
@@ -85,8 +126,17 @@ export function ChatProfileAnswer({
 								</span>
 
 								<div className="flex gap-2">
-									<Button>Ask more AI</Button>
-									<Button className="bg-green-400 dark:text-white hover:bg-green-400 dark:bg-green-500 dark:hover:bg-green-600">
+									<Button
+										onClick={() => {
+											createChat(p.id, true);
+										}}
+									>
+										Ask more AI
+									</Button>
+									<Button
+										className="bg-green-400 dark:text-white hover:bg-green-400 dark:bg-green-500 dark:hover:bg-green-600"
+										onClick={async () => createChat(p.id, false)}
+									>
 										Real Chat
 									</Button>
 								</div>
@@ -99,15 +149,23 @@ export function ChatProfileAnswer({
 	);
 }
 
-export function ChatQuestion({ children }: { children: string }) {
+export function ChatQuestion({
+	children,
+	isLeft,
+}: { children: string; isLeft?: boolean }) {
 	return (
-		<div className="w-full flex justify-end my-2">
+		<div
+			className={cn("w-full flex justify-end my-2", {
+				"justify-start": isLeft,
+				"justify-end": !isLeft,
+			})}
+		>
 			<Card
 				className={`h-max w-fit max-w-xl p-2  ${
 					children.length > 200 ? "text-xl" : "text-2xl"
 				}`}
 			>
-				{children}
+				<Markdown>{children}</Markdown>
 			</Card>
 		</div>
 	);
