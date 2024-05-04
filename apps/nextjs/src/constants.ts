@@ -1,6 +1,6 @@
 const uni = [
 	"Monash",
-	"University of melbourne",
+	"UniMelb",
 	"Swinburne",
 	"RMIT",
 	"Deakin",

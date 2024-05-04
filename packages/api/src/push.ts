@@ -118,14 +118,29 @@ export const push = ({
 						),
 					);
 
-					yield* _(Effect.retry(mutationEffect, { times: 3 }));
+					yield* _(Effect.retry(mutationEffect, { times: 2 }));
+
+					yield* Effect.log(`ORIGIN PARTYKIT ${partyKitOrigin}`);
+					yield* Effect.log(`${partyKitOrigin}/parties/main/${spaceID}`);
 
 					yield* _(
 						Effect.tryPromise(() =>
 							fetch(`${partyKitOrigin}/parties/main/${spaceID}`, {
 								method: "POST",
+								body:spaceID
+								// body: JSON.stringify(""),
 							}),
-						).pipe(Effect.retry({ times: 2 })),
+						)
+							.pipe(Effect.retry({ times: 2 }))
+							.pipe(
+								Effect.catchAll((e) =>
+									Effect.gen(function* () {
+										yield* Effect.log(e);
+										yield* Effect.log("partykit error");
+										return yield* Effect.succeed({});
+									}),
+								),
+							),
 					);
 				}),
 			),
@@ -148,11 +163,7 @@ const processMutation = ({
 	mutators: Server.GlobalMutatorsMapType | Server.ChatMutatorsMapType;
 }): Effect.Effect<
 	number,
-	| ZodError<any>
-	| UnknownException
-	| NotFound
-	| AuthorizationError
-	| InternalServerError,
+	ZodError<any> | UnknownException | NotFound | InternalServerError,
 	Database | TableMutator
 > =>
 	Effect.gen(function* (_) {

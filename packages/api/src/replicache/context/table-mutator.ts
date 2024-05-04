@@ -2,7 +2,7 @@ import { Context, type Effect } from "effect";
 import type { ReadonlyJSONObject } from "replicache";
 
 import type { TableName } from "@soulmate/db";
-import type { AuthorizationError, NotFound } from "@soulmate/validators";
+import type { NotFound } from "@soulmate/validators";
 
 type SetItem = ReadonlyJSONObject & {
 	id: string;

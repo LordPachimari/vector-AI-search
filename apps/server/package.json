@@ -1,6 +1,9 @@
 {
 	"name": "@soulmate/server",
 	"version": "1.0.50",
+	"private": true,
+	"type": "module",
+	"license": "MIT",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "bun run --watch src/index.ts",
@@ -10,10 +13,19 @@
 	},
 	"dependencies": {
 		"@elysiajs/cors": "^1.0.2",
-		"elysia": "latest"
+		"@neondatabase/serverless": "^0.9.1",
+		"@soulmate/api": "workspace:^0.1.0",
+		"@soulmate/db": "workspace:^0.1.0",
+		"@soulmate/utils": "workspace:^0.1.0",
+		"@soulmate/validators": "workspace:^0.1.0",
+		"drizzle-orm": "^0.30.4",
+		"effect": "^3.0.4",
+		"elysia": "latest",
+		"zod": "^3.23.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.7.2",
+		"@soulmate/tsconfig": "workspace:*",
 		"bun-types": "latest"
 	},
 	"module": "src/index.js"

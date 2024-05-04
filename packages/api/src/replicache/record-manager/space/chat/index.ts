@@ -1,7 +1,5 @@
-import { eq, or } from "drizzle-orm";
 import { Effect } from "effect";
 
-import { schema } from "@soulmate/db";
 import { UnknownExceptionLogger } from "@soulmate/utils";
 
 import type { RowsWTableName } from "@soulmate/validators";
@@ -19,18 +17,18 @@ export const chatCVD: GetRowsWTableName = ({
 			Effect.tryPromise(() =>
 				fullRows
 					? transaction.query.chats.findMany({
-							where: or(
-								eq(schema.chats.chatter1ID, authID),
-								eq(schema.chats.chatter2ID, authID),
+							where:(chats, {or, eq})=> or(
+								eq(chats.chatter1ID, authID),
+								eq(chats.chatter2ID, authID),
 							),
 							with: {
 								messages: true,
 							},
 						})
 					: transaction.query.chats.findMany({
-							where: or(
-								eq(schema.chats.chatter1ID, authID),
-								eq(schema.chats.chatter2ID, authID),
+							where:(chats, {or, eq})=> or(
+								eq(chats.chatter1ID, authID),
+								eq(chats.chatter2ID, authID),
 							),
 							columns: {
 								id: true,

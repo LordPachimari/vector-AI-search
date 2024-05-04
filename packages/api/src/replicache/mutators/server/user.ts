@@ -16,6 +16,8 @@ const createUser = zod(CreateUserSchema, (input) =>
 const updateUser = zod(UpdateUserSchema, (input) =>
 	Effect.gen(function* (_) {
 		const { updates, id } = input;
+
+		yield* Effect.log("are you up there");
 		const tableMutator = yield* _(TableMutator);
 
 		return yield* _(tableMutator.update(id, { ...updates }, "users"));
