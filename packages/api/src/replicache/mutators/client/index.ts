@@ -2,7 +2,12 @@ import type { WriteTransaction } from "replicache";
 
 import type { Server } from "..";
 import { updateUser } from "./user";
-import { createChat } from "./chat";
+import {
+	clearChat,
+	createChat,
+	createMessage,
+	createSystemMessage,
+} from "./chat";
 
 export type GlobalMutatorsType = {
 	[key in keyof Server.GlobalMutatorsType]: (
@@ -22,4 +27,7 @@ export type ChatMutatorsType = {
 };
 export const ChatMutators: ChatMutatorsType = {
 	createChat,
+	createSystemMessage,
+	createMessage,
+	clearChat,
 };

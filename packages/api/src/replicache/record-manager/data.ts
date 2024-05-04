@@ -443,6 +443,27 @@ const getFullRows = ({
 
 		if (!table) return yield* new NotFound({ message: "table not found" });
 
+		if (tableName === "chats") {
+			return yield* _(
+				pipe(
+					Effect.tryPromise(() =>
+						transaction.query.chats.findMany({
+							where: (chats, { inArray }) => inArray(chats.id, keys),
+							with: {
+								messages: true,
+								systemMessages: true,
+								chatter1: true,
+								chatter2: true,
+							},
+						}),
+					),
+					Effect.orDieWith((e) =>
+						UnknownExceptionLogger(e, "get full items error"),
+					),
+				),
+			);
+		}
+
 		return yield* _(
 			pipe(
 				Effect.tryPromise(() =>

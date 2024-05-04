@@ -23,12 +23,16 @@ export const push = ({
 	db,
 	spaceID,
 	partyKitOrigin,
+	serverURL,
+	GOOGLE_API_KEY,
 }: {
 	body: PushRequest;
-	authID: string | null | undefined;
+	authID: string | undefined;
 	db: Db;
 	spaceID: SpaceID;
 	partyKitOrigin: string;
+	serverURL: string;
+	GOOGLE_API_KEY: string;
 }) =>
 	Effect.gen(function* (_) {
 		if (!authID) return;
@@ -58,6 +62,9 @@ export const push = ({
 											Database.of({
 												manager: transaction,
 												tableNameToTableMap,
+												userID: authID,
+												serverURL,
+												GOOGLE_API_KEY,
 											}),
 										);
 										// 2: GET CLIENT ROW
@@ -118,31 +125,28 @@ export const push = ({
 					);
 
 					yield* _(Effect.retry(mutationEffect, { times: 2 }));
-
-					yield* Effect.log(`ORIGIN PARTYKIT ${partyKitOrigin}`);
-					yield* Effect.log(`${partyKitOrigin}/parties/main/${spaceID}`);
-
-					yield* _(
-						Effect.tryPromise(() =>
-							fetch(`${partyKitOrigin}/parties/main/${spaceID}`, {
-								method: "POST",
-								body: spaceID,
-								// body: JSON.stringify(""),
-							}),
-						)
-							.pipe(Effect.retry({ times: 2 }))
-							.pipe(
-								Effect.catchAll((e) =>
-									Effect.gen(function* () {
-										yield* Effect.log(e);
-										yield* Effect.log("partykit error");
-										return yield* Effect.succeed({});
-									}),
-								),
-							),
-					);
 				}),
 			),
+		);
+
+		yield* _(
+			Effect.tryPromise(() =>
+				fetch(`${partyKitOrigin}/parties/main/global`, {
+					method: "POST",
+					body: spaceID,
+					// body: JSON.stringify(""),
+				}),
+			)
+				.pipe(Effect.retry({ times: 2 }))
+				.pipe(
+					Effect.catchAll((e) =>
+						Effect.gen(function* () {
+							yield* Effect.log(e);
+							yield* Effect.log("partykit error");
+							return yield* Effect.succeed({});
+						}),
+					),
+				),
 		);
 
 		//TODO: send poke

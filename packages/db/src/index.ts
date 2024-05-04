@@ -4,7 +4,13 @@ import { drizzle } from "drizzle-orm/neon-serverless";
 import { Pool } from "@neondatabase/serverless";
 export * from "./table-name";
 
-const tableName = ["user", "chat", "json", "message"];
+const tableName = [
+	"users",
+	"chats",
+	"json",
+	"messages",
+	"systemMessages",
+] as const;
 
 export const client = new Pool({ connectionString: "" });
 export const db = drizzle(client, { schema });

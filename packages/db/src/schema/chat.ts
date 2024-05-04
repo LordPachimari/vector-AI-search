@@ -1,7 +1,7 @@
-import { integer, pgTable, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import { boolean, index, integer, pgTable, varchar } from "drizzle-orm/pg-core";
 import { users } from "./user";
 import { relations } from "drizzle-orm";
-import { messages } from "./message";
+import { messages, systemMessages } from "./message";
 
 export const chats = pgTable(
 	"chats",
@@ -11,20 +11,22 @@ export const chats = pgTable(
 		chatter1ID: varchar("chatter1_id")
 			.notNull()
 			.references(() => users.id),
-		chatter2ID: varchar("chatter2_id")
-			.notNull()
-			.references(() => users.id),
+		chatter2ID: varchar("chatter2_id").references(() => users.id),
+		isAI: boolean("is_ai").default(false),
+
 		createdAt: varchar("created_at").notNull(),
 		updatedAt: varchar("updated_at").$onUpdate(() => new Date().toISOString()),
 		version: integer("version").notNull(),
 	},
 	(chats) => ({
-		chatter1Idx: uniqueIndex("chatter1_index").on(chats.chatter1ID),
-		chatter2Idx: uniqueIndex("chatter2_index").on(chats.chatter2ID),
+		chatter1Idx: index("chatter1_index").on(chats.chatter1ID),
+		chatter2Idx: index("chatter2_index").on(chats.chatter2ID),
 	}),
 );
 
 export const chatRelations = relations(chats, ({ many, one }) => ({
+	messages: many(messages),
+	systemMessages: many(systemMessages),
 	chatter1: one(users, {
 		fields: [chats.chatter1ID],
 		references: [users.id],
@@ -33,5 +35,4 @@ export const chatRelations = relations(chats, ({ many, one }) => ({
 		fields: [chats.chatter2ID],
 		references: [users.id],
 	}),
-	messages: many(messages),
 }));

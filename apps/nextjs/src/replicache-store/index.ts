@@ -9,6 +9,8 @@ export const ReplicacheStore = {
 		createGetByHandle<Item>(rep, handle),
 	getByID: <Item>(rep: Replicache | null, id: string) =>
 		createGetByID<Item>(rep, id),
+	getByIDs: <Item>(rep: Replicache | null, ids: string[]) =>
+		createGetByIDs<Item>(rep, ids),
 	scan: <Item>(rep: Replicache | null, prefix: string) =>
 		createScan<Item>(rep, prefix),
 };
@@ -59,6 +61,40 @@ function createGetByID<T>(
 	);
 
 	return itemState;
+}
+function createGetByIDs<T>(rep: Replicache | null, ids: string[]): T[] {
+	const [itemsState, setItemsState] = useState<T[]>([]);
+
+	useSubscribe(
+		rep,
+		async (tx) => {
+			const items: T[] = [];
+			const set = new Set();
+			for (const id of ids) {
+				if (id && !set.has(id)) {
+					const [item] = await tx
+						.scan({
+							indexName: "id",
+							start: {
+								key: [id],
+							},
+
+							limit: 1,
+						})
+						.values()
+						.toArray();
+					if (item) {
+						set.add(id);
+						items.push(item as T);
+					}
+				}
+			}
+			setItemsState(items);
+		},
+		{ default: [], dependencies: [ids] },
+	);
+
+	return itemsState;
 }
 function createGetByHandle<T>(
 	rep: Replicache | null,

@@ -54,6 +54,26 @@ export default function ChatReplicacheProvider({
 					},
 				};
 			},
+			pusher: async (req) => {
+				const now = performance.now();
+				const result = await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/push/chat`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"x-user-id": userID,
+					},
+					body: JSON.stringify(req),
+				});
+				const end = performance.now();
+				console.log("push time", end - now);
+
+				return {
+					httpRequestInfo: {
+						httpStatusCode: result.status,
+						errorMessage: result.statusText,
+					},
+				};
+			},
 		});
 		setChatRep(r);
 	}, [chatRep, setChatRep, userID]);

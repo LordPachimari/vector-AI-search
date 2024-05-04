@@ -15,21 +15,16 @@ export const globalCVD: GetRowsWTableName = ({
 			pipe(
 				Effect.tryPromise(() =>
 					fullRows
-						? transaction.query.users.findFirst({
-								where: (users, { eq }) => eq(users.id, authID),
-							})
-						: transaction.query.users.findFirst({
+						? transaction.query.users.findMany()
+						: transaction.query.users.findMany({
 								columns: {
 									id: true,
 									version: true,
 									replicachePK: true,
 								},
-								where: (users, { eq }) => eq(users.id, authID),
 							}),
 				),
-				Effect.map((user) => [
-					{ tableName: "users" as const, rows: user ? [user] : [] },
-				]),
+				Effect.map((users) => [{ tableName: "users" as const, rows: users }]),
 				Effect.orDieWith((e) =>
 					UnknownExceptionLogger(e, "ERROR RETRIEVING USER CVD"),
 				),

@@ -7,8 +7,8 @@ import { env } from "./env";
 export async function middleware(request: NextRequest) {
 	const response = NextResponse.next();
 	const userID = request.cookies.has("user_id");
-	const newID = generateID({ prefix: "user" });
 	if (!userID) {
+		const newID = generateID({ prefix: "user" });
 		const result = await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/create-user`, {
 			method: "POST",
 			headers: {
@@ -19,7 +19,23 @@ export async function middleware(request: NextRequest) {
 			}),
 		});
 		console.log("are u ok?", result.ok);
+
+		const result1 = await fetch(
+			`${env.NEXT_PUBLIC_WORKER_URL}/create-soulmate-chat`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					userID: newID,
+				}),
+			},
+		);
+		console.log("are u ok?", result1.ok);
+
 		response.cookies.set("user_id", newID);
+		response.cookies.set("chat_id", `soulmate_chat_${newID}`);
 	}
 	return response;
 }
