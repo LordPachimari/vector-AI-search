@@ -3,7 +3,6 @@ import { Clock, Effect, Layer } from "effect";
 import { tableNameToTableMap, type Db } from "@soulmate/db";
 import {
 	InternalServerError,
-	type AuthorizationError,
 	type Mutation,
 	type NotFound,
 	type PushRequest,
