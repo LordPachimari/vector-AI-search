@@ -1,6 +1,13 @@
 "use client";
-import React, { useCallback } from "react";
+import type { UpdateUser, User } from "@soulmate/validators";
+import debounce from "lodash.debounce";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useTransition } from "react";
+import { toast } from "sonner";
+import ImagePlaceholder from "~/components/image-placeholder";
+import { ReplicacheStore } from "~/replicache-store";
 import { Avatar, AvatarFallback, AvatarImage } from "~/ui/avatar";
+import { Button } from "~/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -8,17 +15,15 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "~/ui/dialog";
-import debounce from "lodash.debounce";
-import { Button } from "~/ui/button";
+import { useReplicache } from "~/zustand/replicache";
 import { ImageSection } from "./image";
 import { Inputs } from "./inputs";
 import { SocialMedia } from "./social-media";
-import { useReplicache } from "~/zustand/replicache";
-import type { UpdateUser, User } from "@soulmate/validators";
-import { ReplicacheStore } from "~/replicache-store";
-import ImagePlaceholder from "~/components/image-placeholder";
+import { env } from "~/env";
 
 export default function ProfilePage({ userID }: { userID: string }) {
+	const params = useSearchParams();
+	const isTwitter = params.has("twitter");
 	const globalRep = useReplicache((state) => state.globalRep);
 	const user = ReplicacheStore.getByID<User>(globalRep, userID);
 	const updateProfile = useCallback(
@@ -39,6 +44,15 @@ export default function ProfilePage({ userID }: { userID: string }) {
 		}, 500),
 		[globalRep],
 	);
+
+	const [isPending, startTransition] = useTransition();
+	useEffect(() => {
+		if (isTwitter && user && !user.twitterAuth) {
+			updateProfile({ twitterAuth: true }).then(() =>
+				toast.success("Twitter accound data stored!"),
+			);
+		}
+	}, [isTwitter, updateProfile, user]);
 
 	return (
 		<main className="w-full flex items-center justify-center px-4">
@@ -77,7 +91,21 @@ export default function ProfilePage({ userID }: { userID: string }) {
 				{/* <section></section> */}
 				<SocialMedia />
 				<section className="w-full flex justify-center">
-					<Button>Found soulmate, now!</Button>
+					<Button
+						disabled={isPending}
+						onClick={async () => {
+							startTransition(async () => {
+								user && await fetch(`${env.NEXT_PUBLIC_WORKER_URL}/store-profile`, {
+									method:"POST",
+									body:JSON.stringify({
+										user
+									})
+								});
+							});
+						}}
+					>
+						Find soulmate, now!
+					</Button>
 				</section>
 			</div>
 		</main>

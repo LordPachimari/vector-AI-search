@@ -13,7 +13,7 @@ UPSTASH_URL = 'https://ethical-caribou-41883-us1-vector.upstash.io'
 UPSTASH_TOKEN = 'ABkFMGV0aGljYWwtY2FyaWJvdS00MTg4My11czFhZG1pbll6Um1PRFppTkRndFpHTmhaUzAwWlRCakxUZzRNMkl0WTJZeVlUQTRaREpqT1dJeA=='
 TWITTER_CLIENT_ID = 'ekJHRjRSVFVVZGNsMGVOZFpqc2U6MTpjaQ'
 TWITTER_CLIENT_SECRET = 'ZGGb_ehgrqSo5fCWfMkbZZ4UXkAvCNoMRis1i68i2ZAfgGti0K'
-TWITTER_REDIRECT_URL = 'http://localhost:3000/twitter-code'
+TWITTER_REDIRECT_URL = 'https://uni-soulmate.vercel.app/twitter-code'
 
 [http_service]
   internal_port = 8080

@@ -4,8 +4,10 @@ import { Pool } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { schema, type Db } from "@soulmate/db";
 import { z } from "zod";
+import { Index } from "@upstash/vector";
 import {
 	SpaceIDSchema,
+	UserSchema,
 	pullRequestSchema,
 	pushRequestSchema,
 } from "@soulmate/validators";
@@ -33,19 +35,12 @@ app.use(
 		credentials: true,
 	}),
 );
-app.use("*", async (c, next) => {
-	const client = new Pool({ connectionString: c.env.DATABASE_URL });
-	const db = drizzle(client, { schema: schema });
-
-	c.set("db" as never, db);
-
-	return next();
-});
 app.get("/", (c) => {
 	return c.text("Hello Hono!");
 });
 app.post("/create-user", async (c) => {
-	const db = c.get("db" as never) as Db;
+  const client = new Pool({ connectionString: c.env.DATABASE_URL });
+	const db = drizzle(client, { schema: schema });
 	try {
 		const parsedBody = z.object({ id: z.string() }).parse(await c.req.json());
 		await db.insert(schema.users).values({
@@ -62,8 +57,8 @@ app.post("/create-user", async (c) => {
 	}
 });
 app.post("/pull/:spaceID", async (c) => {
-	// 1: PARSE INPUT
-	const db = c.get("db" as never) as Db;
+  const client = new Pool({ connectionString: c.env.DATABASE_URL });
+	const db = drizzle(client, { schema: schema });
 	const spaceID = SpaceIDSchema.parse(c.req.param("spaceID"));
 	const body = pullRequestSchema.parse(await c.req.json());
 	const userID = c.req.header("x-user-id");
@@ -102,6 +97,26 @@ app.post("/push/:spaceID", async (c) => {
 
 	// 3: RUN PROMISE
 	await Effect.runPromise(pushEffect);
+
+	return c.json({}, 200);
+});
+app.post("/store-profile", async (c) => {
+	// 1: PARSE INPUT
+	const body = z.object({user:UserSchema}).parse(await c.req.json());
+
+	const userID = c.req.header("x-user-id");
+  const index = new Index({
+    url: process.env.UPSTASH_URL,
+    token: process.env.UPSTASH_TOKEN,
+  });
+  await index.upsert({
+    id: `profile-${body.user.id}`,
+    data: JSON.stringify(body.user),
+    metadata: {
+      name:body.user.fullName,
+      userID,
+    },
+  })
 
 	return c.json({}, 200);
 });

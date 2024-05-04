@@ -35,6 +35,9 @@ importers:
       '@soulmate/validators':
         specifier: ^0.1.0
         version: link:../../packages/validators
+      '@upstash/vector':
+        specifier: ^1.0.7
+        version: 1.0.7
       drizzle-orm:
         specifier: ^0.30.4
         version: 0.30.10(@cloudflare/workers-types@4.20240502.0)(@neondatabase/serverless@0.9.1)
