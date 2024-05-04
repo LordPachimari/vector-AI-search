@@ -18,9 +18,11 @@
 		"@soulmate/db": "workspace:^0.1.0",
 		"@soulmate/utils": "workspace:^0.1.0",
 		"@soulmate/validators": "workspace:^0.1.0",
+		"@upstash/vector": "^1.0.7",
 		"drizzle-orm": "^0.30.4",
 		"effect": "^3.0.4",
 		"elysia": "latest",
+		"twitter-api-sdk": "^1.2.1",
 		"zod": "^3.23.0"
 	},
 	"devDependencies": {

@@ -11,9 +11,9 @@ export type CreateUser = z.infer<typeof CreateUserSchema>;
 
 export type CreateChat = z.infer<typeof CreateChatSchema>;
 export const UserSchema = createSelectSchema(schema.users).extend({
-	hobbies:z.array(z.string()).optional(),
+	hobbies: z.array(z.string()).optional(),
 
-	skills:z.array(z.string()).optional(),
+	skills: z.array(z.string()).optional(),
 });
 export type User = z.infer<typeof UserSchema>;
 export const UpdateUserSchema = z.object({

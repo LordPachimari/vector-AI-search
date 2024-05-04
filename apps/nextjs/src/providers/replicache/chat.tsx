@@ -18,8 +18,8 @@ export default function ChatReplicacheProvider({
 	const setChatRep = useReplicache((state) => state.setChatRep);
 
 	useEffect(() => {
-		if (chatRep ) return;
-		if (!userID) return window.location.reload()
+		if (chatRep) return;
+		if (!userID) return window.location.reload();
 		const r = new Replicache({
 			name: "global",
 			licenseKey: env.NEXT_PUBLIC_REPLICACHE_KEY,

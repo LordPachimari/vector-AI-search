@@ -1,9 +1,10 @@
 import { cors } from "@elysiajs/cors";
 import { pull, push } from "@soulmate/api";
 import { db, schema } from "@soulmate/db";
+import { Index } from "@upstash/vector";
 import { Effect } from "effect";
-import { Elysia } from "elysia";
-import PartySocket from "partysocket";
+import { Elysia, error } from "elysia";
+import { auth, Client } from "twitter-api-sdk";
 
 import {
 	SpaceIDSchema,
@@ -12,6 +13,13 @@ import {
 } from "@soulmate/validators";
 import { z } from "zod";
 import { UnknownExceptionLogger } from "@soulmate/utils";
+const STATE = "uni-soulmate";
+const authClient = new auth.OAuth2User({
+	client_id: process.env.TWITTER_CLIENT_ID ?? "",
+	client_secret: process.env.TWITTER_CLIENT_SECRET,
+	callback: process.env.TWITTER_REDIRECT_URL ?? "",
+	scopes: ["tweet.read", "users.read", "bookmark.read", "like.read"],
+});
 const app = new Elysia()
 	.use(
 		cors({
@@ -71,6 +79,54 @@ const app = new Elysia()
 		// 3: RUN PROMISE
 
 		await Effect.runPromise(pushEffect);
+	})
+	.post("/twitter-auth-url", async ({ store }) => {
+		try {
+			const url = authClient.generateAuthURL({
+				state: STATE,
+				code_challenge_method: "s256",
+			});
+
+			return url;
+		} catch (err) {
+			console.error(err);
+			return error(500, "Internal Server Error");
+		}
+	})
+	.post("/store-twitter-data", async ({ store, headers }) => {
+		const code = headers["x-twitter-code"];
+		if (!code) return error(400, "Bad Request");
+		const client = new Client(authClient);
+		const userID = headers["x-user-id"];
+		try {
+			await authClient.requestAccessToken(code as string);
+
+			const index = new Index({
+				url: process.env.UPSTASH_URL,
+				token: process.env.UPSTASH_TOKEN,
+			});
+			const user = (
+				await client.users.findMyUser({
+					"user.fields": ["id", "username", "description"],
+				})
+			).data;
+
+			//THESE ENDPOINTS ARE NOT FREE -> bookmarks, likes, follows
+			//THATS WHY WE ONLY STORE USER USERNAME AND DESCRIPTION. CAPPED EVERYONE
+
+			user &&
+				(await index.upsert({
+					id: user.id,
+					data: `${user.username} ${user.description}`,
+					metadata: {
+						description: user.description,
+						userID,
+					},
+				}));
+		} catch (err) {
+			console.error("ERROR CATCHED", JSON.stringify(err));
+			return error(500, "Internal Server Error");
+		}
 	})
 	.listen(8080);
 

@@ -16,7 +16,7 @@ export const globalCVD: GetRowsWTableName = ({
 				Effect.tryPromise(() =>
 					fullRows
 						? transaction.query.users.findFirst({
-								where: (users, {eq}) => eq(users.id, authID),
+								where: (users, { eq }) => eq(users.id, authID),
 							})
 						: transaction.query.users.findFirst({
 								columns: {
@@ -24,7 +24,7 @@ export const globalCVD: GetRowsWTableName = ({
 									version: true,
 									replicachePK: true,
 								},
-								where: (users, {eq}) => eq(users.id, authID),
+								where: (users, { eq }) => eq(users.id, authID),
 							}),
 				),
 				Effect.map((user) => [

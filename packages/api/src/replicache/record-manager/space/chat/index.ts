@@ -17,19 +17,15 @@ export const chatCVD: GetRowsWTableName = ({
 			Effect.tryPromise(() =>
 				fullRows
 					? transaction.query.chats.findMany({
-							where:(chats, {or, eq})=> or(
-								eq(chats.chatter1ID, authID),
-								eq(chats.chatter2ID, authID),
-							),
+							where: (chats, { or, eq }) =>
+								or(eq(chats.chatter1ID, authID), eq(chats.chatter2ID, authID)),
 							with: {
 								messages: true,
 							},
 						})
 					: transaction.query.chats.findMany({
-							where:(chats, {or, eq})=> or(
-								eq(chats.chatter1ID, authID),
-								eq(chats.chatter2ID, authID),
-							),
+							where: (chats, { or, eq }) =>
+								or(eq(chats.chatter1ID, authID), eq(chats.chatter2ID, authID)),
 							columns: {
 								id: true,
 								version: true,

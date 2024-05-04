@@ -127,7 +127,7 @@ export const push = ({
 						Effect.tryPromise(() =>
 							fetch(`${partyKitOrigin}/parties/main/${spaceID}`, {
 								method: "POST",
-								body:spaceID
+								body: spaceID,
 								// body: JSON.stringify(""),
 							}),
 						)
