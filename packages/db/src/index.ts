@@ -1,7 +1,14 @@
-export * from "drizzle-orm/sql";
-export { alias } from "drizzle-orm/mysql-core";
+export * as schema from "../src/schema";
+import * as schema from "../src/schema";
+import { drizzle } from "drizzle-orm/neon-serverless";
+import { Pool } from "@neondatabase/serverless";
+export * from "./table-name";
 
-export const schema = {};
+const tableName = ["user", "chat", "json", "message"];
 
-// const psClient = new Client({});
-// export const db = drizzle(psClient, { schema });
+export const client = new Pool({ connectionString: "" });
+export const db = drizzle(client, { schema });
+
+export type TableName = (typeof tableName)[number];
+export type Db = typeof db;
+export type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];

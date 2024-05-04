@@ -1,0 +1,8 @@
+name = "soulmate"
+compatibility_date = "2023-12-01"
+
+vars = { DATABASE_URL='postgresql://soulmate-db_owner:rFfQeg7NJMH9@ep-shy-flower-a7g6cnxp-pooler.ap-southeast-2.aws.neon.tech/soulmate-db?sslmode=require', ENVIRONMENT= 'dev', PARTYKIT_ORIGIN='http://localhost:1999'}
+
+[env.dev]
+vars = { DATABASE_URL='postgresql://soulmate-db_owner:rFfQeg7NJMH9@ep-patient-forest-a74migc5-pooler.ap-southeast-2.aws.neon.tech/soulmate-db?sslmode=require', ENVIRONMENT= 'dev', PARTYKIT_ORIGIN='https://soulmate.lordpachimari.partykit.dev'}
+

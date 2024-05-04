@@ -1,5 +1,5 @@
 {
-	"name": "@acme/api",
+	"name": "@soulmate/api",
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
@@ -20,13 +20,17 @@
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
 	},
 	"dependencies": {
-		"@acme/db": "workspace:*",
-		"@acme/validators": "workspace:*",
-		"zod": "^3.23.0"
+		"@soulmate/db": "workspace:*",
+		"@soulmate/utils": "workspace:*",
+		"@soulmate/validators": "workspace:*",
+		"remeda": "^1.61.0",
+		"replicache": "^14.2.2",
+		"ulidx": "^2.3.0",
+		"zod": "^3.23.6"
 	},
 	"devDependencies": {
-		"@acme/tsconfig": "workspace:*",
-		"@biomejs/biome": "1.7.2",
+		"@biomejs/biome": "^1.7.2",
+		"@soulmate/tsconfig": "workspace:*",
 		"typescript": "^5.4.5"
 	}
 }
