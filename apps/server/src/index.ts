@@ -56,7 +56,6 @@ const app = new Elysia()
 					"user.fields": ["id", "username", "description"],
 				})
 			).data;
-			console.log("user", user);
 
 			//THESE ENDPOINTS ARE NOT FREE -> bookmarks, likes, follows
 			//THATS WHY WE ONLY STORE USER USERNAME AND DESCRIPTION. CAPPED EVERYONE

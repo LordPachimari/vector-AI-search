@@ -82,7 +82,6 @@ app.post("/pull/:spaceID", async (c) => {
 	const spaceID = SpaceIDSchema.parse(c.req.param("spaceID"));
 	const body = pullRequestSchema.parse(await c.req.json());
 	const userID = c.req.header("x-user-id");
-	console.log("userID", userID);
 
 	// 2: PULL
 	const pullEffect = pull({
@@ -105,7 +104,6 @@ app.post("/push/:spaceID", async (c) => {
 	const body = pushRequestSchema.parse(await c.req.json());
 
 	const userID = c.req.header("x-user-id");
-	console.log("userID", userID);
 
 	// 2: PULL
 	const pushEffect = push({

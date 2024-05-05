@@ -8,7 +8,6 @@ import { env } from "~/env";
 import { cn } from "~/utils/cn";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "~/ui/toaster";
-import { ThemeToggle } from "~/providers/themes";
 import { Header } from "~/components/header";
 
 export const metadata: Metadata = {

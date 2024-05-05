@@ -70,7 +70,7 @@ export function Inputs({
 			</div>
 			<div className="my-2">
 				<label className="font-semibold">
-					{"Write you hobby. (Press comma to separate)"}
+					{"List you hobbies. (Press comma to separate)"}
 				</label>
 				<TagInput
 					values={hobbies}
@@ -85,7 +85,7 @@ export function Inputs({
 			</div>
 			<div className="my-2">
 				<label className="font-semibold">
-					{"Write you skills. (Press comma to separate)"}
+					{"List you skills. (Press comma to separate)"}
 				</label>
 				<TagInput
 					values={skills}
