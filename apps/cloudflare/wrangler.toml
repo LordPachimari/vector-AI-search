@@ -1,8 +1,0 @@
-name = "soulmate"
-compatibility_date = "2023-12-01"
-
-vars = { DATABASE_URL='postgresql://soulmate-db_owner:DuCNe68QyAtF@ep-mute-night-a74ecuig-pooler.ap-southeast-2.aws.neon.tech/soulmate-db?sslmode=require', ENVIRONMENT= 'dev', PARTYKIT_ORIGIN='http://localhost:1999', SERVER_URL='http://localhost:8080', GOOGLE_API_KEY='AIzaSyDfZN28UNOxmF7dEgt58qUM-4bxL-JX65I'}
-
-[env.dev]
-vars = { DATABASE_URL='postgresql://soulmate-db_owner:DuCNe68QyAtF@ep-round-cake-a7exnjv9-pooler.ap-southeast-2.aws.neon.tech/soulmate-db?sslmode=require', ENVIRONMENT= 'dev', PARTYKIT_ORIGIN='https://soulmate.lordpachimari.partykit.dev', SERVER_URL='https://uni-soulmate.fly.dev', GOOGLE_API_KEY='AIzaSyDfZN28UNOxmF7dEgt58qUM-4bxL-JX65I'}
-
