@@ -70,7 +70,6 @@ export default function GlobalReplicacheProvider({
 					},
 				);
 				const end = performance.now();
-				console.log("push time", end - now);
 
 				return {
 					httpRequestInfo: {

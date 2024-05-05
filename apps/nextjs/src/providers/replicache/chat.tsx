@@ -65,7 +65,6 @@ export default function ChatReplicacheProvider({
 					body: JSON.stringify(req),
 				});
 				const end = performance.now();
-				console.log("push time", end - now);
 
 				return {
 					httpRequestInfo: {
