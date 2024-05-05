@@ -17,7 +17,7 @@ export function SocialMedia({
 		<section>
 			<h3 className="text-sm font-semibold text-balance overflow-clip w-full md:w-[25rem]">
 				{
-					"We will scan your tweet likes, follows and bookmarks. To find someone who share similar interests. "
+					"We will scan your tweet likes, follows and bookmarks. To find someone who share your interests. "
 				}
 			</h3>
 			<div className="flex gap-2 items-center">
