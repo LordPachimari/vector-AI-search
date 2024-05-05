@@ -25,7 +25,6 @@ export default function PartykitProvider({
 		},
 		onMessage(e) {
 			const space = e.data as SpaceID;
-			console.log("space", space);
 			if (space === "chat") {
 				return chatRep?.pull();
 			}

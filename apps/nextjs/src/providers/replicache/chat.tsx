@@ -44,7 +44,6 @@ export default function ChatReplicacheProvider({
 					credentials: "include",
 				});
 				const end = performance.now();
-				console.log("pull time", end - now);
 
 				return {
 					response: result.status === 200 ? await result.json() : undefined,

@@ -18,7 +18,6 @@ export async function middleware(request: NextRequest) {
 				id: newID,
 			}),
 		});
-		console.log("are u ok?", result.ok);
 
 		const result1 = await fetch(
 			`${env.NEXT_PUBLIC_WORKER_URL}/create-soulmate-chat`,
@@ -32,7 +31,6 @@ export async function middleware(request: NextRequest) {
 				}),
 			},
 		);
-		console.log("are u ok?", result1.ok);
 
 		response.cookies.set("user_id", newID);
 		response.cookies.set("chat_id", `soulmate_chat_${newID}`);

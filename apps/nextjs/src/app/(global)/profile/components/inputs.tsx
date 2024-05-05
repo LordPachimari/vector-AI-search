@@ -75,7 +75,6 @@ export function Inputs({
 				<TagInput
 					values={hobbies}
 					onChange={async (values) => {
-						console.log("hobbies", values);
 						setHobbies(values as string[]);
 						await updateProfile({ hobbies: values as string[] });
 					}}
@@ -90,7 +89,6 @@ export function Inputs({
 				<TagInput
 					values={skills}
 					onChange={async (values) => {
-						console.log("skills", values);
 						setSkills(values as string[]);
 						await updateProfile({ skills: values as string[] });
 					}}

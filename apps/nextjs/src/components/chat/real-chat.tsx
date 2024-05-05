@@ -54,8 +54,6 @@ export function RealChat({
 		[userID, chatRep, chat],
 	);
 
-	console.log("chat", chat);
-	console.log("messages", messages);
 	const textArea = useRef<HTMLTextAreaElement>(null);
 
 	return (

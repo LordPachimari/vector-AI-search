@@ -10,9 +10,7 @@ import { getEntityFromID } from "./util/get-id";
 
 async function createChat(tx: WriteTransaction, input: CreateChat) {
 	const { chat } = input;
-	console.log("chat id", chat.id);
 	const chatExist = (await tx.get(chat.replicachePK)) as Chat | undefined;
-	console.log("chat exi", chatExist);
 
 	if (chatExist) {
 		console.info("Chat  alr exist");

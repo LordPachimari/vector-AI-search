@@ -57,7 +57,6 @@ export function AIChat({
 		},
 		[userID, chatRep, chat],
 	);
-	console.log("chat", chat);
 	const textArea = useRef<HTMLTextAreaElement>(null);
 
 	return (
