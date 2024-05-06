@@ -45,7 +45,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 					GeistMono.variable,
 				)}
 			>
-				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+				<ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
 					<Header />
 					{props.children}
 					<Toaster />
