@@ -10,3 +10,6 @@ Introducing **UniSoulmate**—a platform powered by AI that connects like-minded
 - **Front-end:** NEXTJS
 - **Design:** Tailwind, shadcn
 - **Websockets:** partykit
+
+DEMO:
+https://www.youtube.com/watch?v=MhaBfhxrqlI&t=2s
