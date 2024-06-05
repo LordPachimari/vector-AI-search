@@ -11,5 +11,4 @@ A platform powered by AI that connects like-minded people around the world. It h
 - **Design:** Tailwind, shadcn
 - **Websockets:** partykit
 
-DEMO:
-https://www.youtube.com/watch?v=MhaBfhxrqlI&t=2s
+
