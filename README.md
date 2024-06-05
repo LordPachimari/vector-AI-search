@@ -1,6 +1,6 @@
-# UniSoulmate
+# Vector AI search
 
-Introducing **UniSoulmate**—a platform powered by AI that connects like-minded students around the world. It helps you find your best study buddy, or what we call your 'uni soulmate'—someone who shares similar interests, skills, career goals, and hobbies, and even complements your differences!
+A platform powered by AI that connects like-minded people around the world. It helps you find ysomeone who shares similar interests, skills, career goals, and hobbies.
 
 ## Tech Stack
 
